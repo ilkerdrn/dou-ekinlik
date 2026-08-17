@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#c50e1f" />
+  <title>DOU Campus — Kampüs Arenası</title>
+  <style>
+    :root{--red:#c50e1f;--black:#111;--ink:#1c1c1c;--muted:#707070;--line:#e7e1e1;--paper:#f7f5f5;--white:#fff;--shadow:0 18px 50px rgba(0,0,0,.10)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:var(--paper)}
+    button{font:inherit}.wrap{width:min(1180px,calc(100% - 36px));margin:auto}.top{height:7px;background:var(--red)}
+    header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+    nav{height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{font-weight:950;letter-spacing:-1px;font-size:23px}.brand span{color:var(--red)}
+    .links{display:flex;gap:24px}.links a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:700}.score{background:var(--black);color:white;padding:10px 15px;border-radius:999px;font-weight:850}.score b{color:#ff7380}
+    .hero{padding:70px 0 54px;display:grid;grid-template-columns:1.2fr .8fr;gap:60px;align-items:center}.eyebrow{font-size:13px;font-weight:900;color:var(--red);letter-spacing:.11em;text-transform:uppercase}
+    h1{font-size:clamp(48px,7vw,84px);line-height:.95;letter-spacing:-.06em;margin:18px 0 24px;max-width:800px}.hero p{font-size:20px;line-height:1.55;color:var(--muted);max-width:650px}
+    .actions{display:flex;gap:12px;margin-top:34px;flex-wrap:wrap}.btn{border:0;border-radius:12px;padding:15px 21px;font-weight:850;cursor:pointer}.primary{background:var(--red);color:white}.secondary{background:white;color:var(--black);border:1px solid var(--line)}
+    .qr-stage{min-height:420px;background:var(--black);border-radius:32px;position:relative;overflow:hidden;box-shadow:var(--shadow);display:grid;place-items:center;color:white}.qr-stage:before{content:"";position:absolute;width:340px;height:340px;border-radius:50%;background:var(--red);right:-90px;top:-80px}.qr{width:210px;height:210px;background:white;border-radius:22px;padding:22px;display:grid;grid-template-columns:repeat(5,1fr);gap:7px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.35)}.qr i{background:var(--black);border-radius:3px}.qr i:nth-child(3n){background:var(--red)}
+    .scan-copy{position:absolute;bottom:28px;left:30px}.scan-copy strong{font-size:25px;display:block}.scan-copy small{color:#bbb}.scan-btn{position:absolute;right:24px;bottom:24px;background:white;border:0;border-radius:12px;padding:13px 16px;font-weight:900;cursor:pointer}
+    section{padding:70px 0}.section-head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:28px}.section-head h2{font-size:clamp(34px,4vw,52px);letter-spacing:-.045em;margin:8px 0}.section-head p{color:var(--muted);max-width:440px;line-height:1.5}
+    .events{display:grid;grid-template-columns:1.3fr .85fr .85fr;gap:16px}.card{background:white;border:1px solid var(--line);border-radius:22px;padding:24px;position:relative;overflow:hidden}.event-main{min-height:360px;background:var(--black);color:white}.tag{display:inline-flex;padding:7px 10px;border-radius:999px;background:#f7e4e6;color:var(--red);font-size:12px;font-weight:900}.event-main .tag{background:#302526;color:#ff7a87}.card h3{font-size:27px;letter-spacing:-.03em;margin:70px 0 12px}.card p{color:var(--muted);line-height:1.5}.event-main p{color:#bbb}.meta{position:absolute;bottom:24px;left:24px;font-size:14px;font-weight:800}.xp{position:absolute;top:20px;right:20px;color:var(--red);font-weight:950}
+    .challenges{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.challenge{min-height:300px;display:flex;flex-direction:column;justify-content:space-between}.num{font-size:76px;font-weight:950;color:#eee;line-height:1}.challenge:nth-child(2){background:var(--red);color:white;border-color:var(--red)}.challenge:nth-child(2) .num{color:#e95461}.challenge:nth-child(2) p{color:#f8cbd0}.challenge h3{margin:18px 0 8px}
+    .league{display:grid;grid-template-columns:.95fr 1.05fr;gap:18px}.league-intro{background:var(--black);color:white;min-height:390px}.league-intro h2{font-size:46px;letter-spacing:-.05em}.league-intro p{color:#bbb}.rank{display:flex;align-items:center;gap:16px;padding:17px 0;border-bottom:1px solid var(--line)}.rank:last-child{border:0}.place{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--black);color:white;font-weight:900}.rank:first-child .place{background:var(--red)}.dept{flex:1;font-weight:850}.bar{height:8px;border-radius:99px;background:#eee;width:150px;overflow:hidden}.bar span{display:block;height:100%;background:var(--red)}
+    .rewards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.reward{min-height:240px}.reward .icon{font-size:52px}.reward button{margin-top:16px;width:100%;border:0;background:var(--black);color:white;padding:12px;border-radius:10px;font-weight:850;cursor:pointer}.reward button:disabled{opacity:.45}
+    footer{background:var(--black);color:white;padding:34px 0;margin-top:40px}.footer{display:flex;justify-content:space-between;gap:20px;color:#aaa}.toast{position:fixed;right:24px;bottom:24px;background:var(--black);color:white;border-left:5px solid var(--red);padding:16px 20px;border-radius:12px;box-shadow:var(--shadow);transform:translateY(120px);opacity:0;transition:.3s;z-index:30}.toast.show{transform:none;opacity:1}
+    @media(max-width:850px){.links{display:none}.hero,.league{grid-template-columns:1fr}.qr-stage{min-height:360px}.events,.challenges,.rewards{grid-template-columns:1fr}.section-head{align-items:start;flex-direction:column}.event-main{min-height:300px}.footer{flex-direction:column}}
+  </style>
+</head>
+<body>
+  <div class="top"></div>
+  <header><nav class="wrap"><div class="brand"><span>DOU</span> Campus</div><div class="links"><a href="#etkinlikler">Etkinlikler</a><a href="#challenge">Challenge</a><a href="#lig">Bölüm Ligi</a><a href="#oduller">Ödüller</a></div><div class="score">XP <b id="score">1.240</b></div></nav></header>
+  <main>
+    <div class="wrap hero">
+      <div><div class="eyebrow">Kampüs Arenası · Doğuş Üniversitesi</div><h1>Katıl.<br>QR okut.<br><span style="color:var(--red)">XP kazan.</span></h1><p>Etkinlikleri keşfet, kampüste QR ile katılımını doğrula, challenge’ları tamamla ve bölümünü zirveye taşı.</p><div class="actions"><a class="btn primary" href="#etkinlikler" style="text-decoration:none">Etkinlikleri keşfet</a><button class="btn secondary" onclick="scan()">QR demo</button></div></div>
+      <div class="qr-stage"><div class="qr" aria-label="Demo QR kodu">${'<i></i>'.repeat(25)}</div><div class="scan-copy"><strong>Bugünün QR’ı</strong><small>18:00’a kadar +120 XP</small></div><button class="scan-btn" onclick="scan()">Kodu okut</button></div>
+    </div>
+    <section id="etkinlikler"><div class="wrap"><div class="section-head"><div><div class="eyebrow">Yaklaşan etkinlikler</div><h2>Kampüste bu hafta</h2></div><p>Katılım noktasındaki süreli QR kodunu okutan öğrenciler XP ve takım puanı kazanır.</p></div><div class="events">
+      <article class="card event-main"><span class="tag">Bugün · Dudullu</span><span class="xp">+120 XP</span><h3>Girişimcilik Gecesi</h3><p>Öğrenci girişimleri, hızlı sunumlar ve kampüs içi networking.</p><div class="meta">17 Ağustos · 18:00 · Konferans Salonu</div></article>
+      <article class="card"><span class="tag">Yarın</span><span class="xp">+80 XP</span><h3>Kampüs Fotoğraf Avı</h3><p>Gizli QR noktalarını takımınla keşfet.</p><div class="meta">Çengelköy · 14:00</div></article>
+      <article class="card"><span class="tag">Cuma</span><span class="xp">+150 XP</span><h3>Kulüpler Sahnesi</h3><p>Üç kulüp, üç performans, tek gece.</p><div class="meta">Dudullu · 19:30</div></article>
+    </div></div></section>
+    <section id="challenge" style="background:white"><div class="wrap"><div class="section-head"><div><div class="eyebrow">Challenge merkezi</div><h2>Üç farklı oyun modu</h2></div><p>Öğrenciyi yalnızca etkinliğe değil, kampüs topluluğuna bağlayan görevler.</p></div><div class="challenges">
+      <article class="card challenge"><div><div class="num">01</div><h3>Gizli QR Avı</h3><p>Kampüsteki ipuçlarını takip et, gizli kodları bul.</p></div><strong>3 nokta · +300 XP</strong></article>
+      <article class="card challenge"><div><div class="num">02</div><h3>Kulüp Pasaportu</h3><p>Farklı kulüp etkinliklerine katıl, pasaportunu tamamla.</p></div><strong>5 kulüp · özel rozet</strong></article>
+      <article class="card challenge"><div><div class="num">03</div><h3>Campus Mix</h3><p>Farklı bölümlerden öğrencilerle takım kur ve yarış.</p></div><strong>4 kişilik takım · +500 XP</strong></article>
+    </div></div></section>
+    <section id="lig"><div class="wrap league"><article class="card league-intro"><div class="eyebrow">Canlı sıralama</div><h2>Bölümünü zirveye taşı.</h2><p>Her doğrulanmış etkinlik katılımı, öğrencinin kişisel XP’sine ve bölüm ligine puan ekler.</p></article><article class="card">
+      <div class="rank"><div class="place">1</div><div class="dept">Yazılım Mühendisliği</div><div class="bar"><span style="width:94%"></span></div><b>8.940</b></div>
+      <div class="rank"><div class="place">2</div><div class="dept">İşletme</div><div class="bar"><span style="width:82%"></span></div><b>7.810</b></div>
+      <div class="rank"><div class="place">3</div><div class="dept">Psikoloji</div><div class="bar"><span style="width:71%"></span></div><b>6.720</b></div>
+      <div class="rank"><div class="place">4</div><div class="dept">Görsel İletişim</div><div class="bar"><span style="width:62%"></span></div><b>5.890</b></div>
+      <div class="rank"><div class="place">5</div><div class="dept">Hukuk</div><div class="bar"><span style="width:51%"></span></div><b>4.820</b></div>
+    </article></div></section>
+    <section id="oduller" style="background:white"><div class="wrap"><div class="section-head"><div><div class="eyebrow">Ödül mağazası</div><h2>XP’ni kampüs avantajına dönüştür</h2></div></div><div class="rewards">
+      <article class="card reward"><div class="icon">☕</div><h3>Kampüs kahvesi</h3><p>450 XP</p><button onclick="claim(450,'Kampüs kahvesi')">Ödülü al</button></article>
+      <article class="card reward"><div class="icon">◉</div><h3>Sınırlı seri rozet</h3><p>800 XP</p><button onclick="claim(800,'Sınırlı seri rozet')">Ödülü al</button></article>
+      <article class="card reward"><div class="icon">◆</div><h3>DOU Campus hoodie</h3><p>2.500 XP</p><button onclick="claim(2500,'DOU Campus hoodie')">Ödülü al</button></article>
+    </div></div></section>
+  </main>
+  <footer><div class="wrap footer"><strong>DOU Campus</strong><span>Öğrenci katılımını oyuna dönüştüren kampüs deneyimi.</span></div></footer><div id="toast" class="toast"></div>
+  <script>
+    let xp=1240,scanned=false;const score=document.getElementById('score'),toast=document.getElementById('toast');
+    function notify(t){toast.textContent=t;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),2800)}
+    function render(){score.textContent=xp.toLocaleString('tr-TR')}
+    function scan(){if(scanned)return notify('Bu etkinliğin XP’si daha önce alındı.');scanned=true;xp+=120;render();notify('Katılım doğrulandı · +120 XP')}
+    function claim(cost,name){if(xp<cost)return notify(`${name} için ${cost-xp} XP daha gerekiyor.`);xp-=cost;render();notify(`${name} hesabına tanımlandı.`)}
+  </script>
+</body>
+</html>
