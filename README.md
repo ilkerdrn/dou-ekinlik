@@ -1,15 +1,14 @@
 # DOU Campus
 
-Doğuş Üniversitesi öğrencileri için QR doğrulamalı etkinlik, challenge, bölüm ligi ve ödül deneyimi prototipi.
+Doğuş Üniversitesi için etkinlik, challenge, QR katılım doğrulama, XP, lig ve ödül deneyimi.
 
-## Özellikler
+## Ekranlar
+- `index.html`: tanıtım ve giriş
+- `student.html`: öğrenci deneyimi
+- `admin.html`: yönetim ve kulüp operasyonları
 
-- Etkinlik keşfi
-- Süreli QR ile katılım doğrulama demosu
-- XP, rozet ve ödül sistemi
-- Gizli QR Avı, Kulüp Pasaportu ve Campus Mix challenge’ları
-- Bölümler arası canlı lig
+Demo öğrenci: `202312345 / demo1234`
 
-## Canlı yayın
+Demo yönetim: `admin@dogus.edu.tr / admin1234`
 
-GitHub Pages: https://ilkerdrn.github.io/dou-ekinlik/
+GitHub Pages demosu verileri tarayıcıda tutar. Üretimde üniversite SSO, sunucu taraflı imzalı QR doğrulaması, PostgreSQL/RLS ve merkezi öğrenci sistemi entegrasyonu gerekir.
