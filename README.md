@@ -12,3 +12,12 @@ Demo öğrenci: `202312345 / demo1234`
 Demo yönetim: `admin@dogus.edu.tr / admin1234`
 
 GitHub Pages demosu verileri tarayıcıda tutar. Üretimde üniversite SSO, sunucu taraflı imzalı QR doğrulaması, PostgreSQL/RLS ve merkezi öğrenci sistemi entegrasyonu gerekir.
+
+## Üretime geçiş
+
+- Veritabanı ve RLS şeması: `supabase/schema.sql`
+- Supabase/Entra örnek ayarı: `config.example.js`
+- Aktivasyon adımları: `docs/PRODUCTION-CHECKLIST.md`
+- KVKK taslak ekranı: `privacy.html`
+
+`config.js` varsayılan olarak güvenli demo modundadır. Gerçek anahtarlar repoya yazılmamalıdır.
