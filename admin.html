@@ -1,9 +1,379 @@
-<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Yönetim — DOU Campus</title><link rel="stylesheet" href="assets/styles.css"></head><body data-page="admin"><div class="app"><aside class="sidebar"><a class="brand" href="index.html"><b>DOU</b> Campus</a><nav class="side-nav"><button class="side-link active" data-panel="adminOverview">⌂ Yönetim özeti</button><button class="side-link" data-panel="manageEvents">◫ Etkinlik yönetimi</button><button class="side-link" data-panel="qrManage">⌁ QR ve katılım</button><button class="side-link" data-panel="manageChallenges">◎ Challenge yönetimi</button><button class="side-link" data-panel="manageRewards">◆ Ödül ve stok</button><button class="side-link" data-panel="analytics">↗ Analitik</button><button class="side-link" data-panel="roles">○ Roller</button></nav><div class="side-bottom"><div class="user-chip"><div class="avatar">YA</div><div><b>Yönetim Admin</b><small style="display:block;color:#999">Tam yetki</small></div></div></div></aside><main class="main"><header class="topbar"><div class="actions"><button id="menuBtn" class="btn btn-light mobile-menu">☰</button><div><small class="muted">Yönetim konsolu</small><h1 id="pageTitle">Yönetim özeti</h1></div></div><div class="actions"><button class="btn btn-primary btn-sm" onclick="document.querySelector('#eventModal').classList.add('open')">+ Yeni etkinlik</button><button class="btn btn-ghost btn-sm" onclick="logout()">Çıkış</button></div></header>
-<section class="panel active" id="adminOverview"><div class="metric-grid"><div class="metric"><small>Aktif etkinlik</small><strong id="adminEventCount">0</strong></div><div class="metric"><small>Toplam katılım</small><strong id="adminAttend">0</strong></div><div class="metric"><small>QR doğrulama oranı</small><strong>%87</strong></div><div class="metric"><small>Aktif öğrenci</small><strong>1.284</strong></div></div><div class="dashboard-grid"><article class="card"><span class="eyebrow">Son 7 gün</span><h3>Katılım ivmesi</h3><div style="height:220px;display:flex;align-items:end;gap:12px;padding-top:20px"><div style="flex:1;height:70px;background:#eee"></div><div style="flex:1;height:96px;background:#eee"></div><div style="flex:1;height:84px;background:#eee"></div><div style="flex:1;height:140px;background:#eee"></div><div style="flex:1;height:116px;background:#eee"></div><div style="flex:1;height:172px;background:#c8102e"></div><div style="flex:1;height:152px;background:#eee"></div></div></article><article class="card"><span class="eyebrow">Sistem durumu</span><h3>Operasyon merkezi</h3><div class="list"><div class="list-item"><span>QR doğrulama servisi</span><span class="status">Çalışıyor</span></div><div class="list-item"><span>Bildirim kuyruğu</span><span class="status">Çalışıyor</span></div><div class="list-item"><span>Ödül stok uyarıları</span><span class="status warn">2 kritik</span></div></div></article></div></section>
-<section class="panel" id="manageEvents"><div class="toolbar"><input class="search" placeholder="Etkinlik ara…"><button class="btn btn-primary" onclick="document.querySelector('#eventModal').classList.add('open')">Yeni etkinlik oluştur</button></div><div class="table-wrap"><table><thead><tr><th>Etkinlik</th><th>Kategori</th><th>Tarih</th><th>Doluluk</th><th>Durum</th><th>İşlem</th></tr></thead><tbody id="adminEvents"></tbody></table></div></section>
-<section class="panel" id="qrManage"><div class="dashboard-grid"><article class="card" style="text-align:center"><span class="eyebrow">Canlı etkinlik kodu</span><h2>Kampüs Quest QR</h2><div class="qrbox"></div><b id="qrToken">Henüz üretilmedi</b><p>Kalan süre: <strong id="qrTime">—</strong></p><button class="btn btn-primary" onclick="rotateQR()">Süreli kod üret</button></article><article class="card"><span class="eyebrow">Doğrulama ilkeleri</span><h3>Sahte katılım koruması</h3><div class="list"><div class="list-item"><span>İmzalı ve süreli anahtar</span><span class="status">Aktif</span></div><div class="list-item"><span>Öğrenci başına tek kullanım</span><span class="status">Aktif</span></div><div class="list-item"><span>Cihaz parmak izi kontrolü</span><span class="status">Aktif</span></div><div class="list-item"><span>Etkinlik saat aralığı</span><span class="status">Aktif</span></div></div><p class="hint">Üretimde imza ve XP işlemi yalnızca sunucu tarafında yapılır.</p></article></div></section>
-<section class="panel" id="manageChallenges"><div class="toolbar"><div><span class="eyebrow">Görev motoru</span><h2>Challenge’lar</h2></div><button class="btn btn-primary">+ Challenge oluştur</button></div><div class="list"><div class="list-item"><div><b>3 farklı kulüp etkinliğine katıl</b><div class="muted">Otomatik doğrulama · 500 XP</div></div><span class="status">426 katılımcı</span></div><div class="list-item"><div><b>Kampüs Quest serisi</b><div class="muted">QR adımları · 750 XP</div></div><span class="status">182 katılımcı</span></div><div class="list-item"><div><b>İyilik elçisi</b><div class="muted">Yönetici onayı · 400 XP</div></div><span class="status warn">14 onay bekliyor</span></div></div></section>
-<section class="panel" id="manageRewards"><div class="toolbar"><div><span class="eyebrow">Operasyon</span><h2>Ödül envanteri</h2></div><button class="btn btn-primary">+ Ödül ekle</button></div><div class="table-wrap"><table><thead><tr><th>Ödül</th><th>XP bedeli</th><th>Stok</th><th>Durum</th></tr></thead><tbody id="inventory"></tbody></table></div></section>
-<section class="panel" id="analytics"><div class="section-head"><div><span class="eyebrow">Karar destek</span><h2>Kampüs analitiği</h2></div><button class="btn btn-light">Raporu dışa aktar</button></div><div class="grid3"><article class="card"><small class="muted">En yüksek katılım</small><h3>Kariyer etkinlikleri</h3><strong style="font-size:30px">%82</strong></article><article class="card"><small class="muted">En aktif bölüm</small><h3>Yazılım Mühendisliği</h3><strong style="font-size:30px">184K XP</strong></article><article class="card"><small class="muted">30 günlük devam</small><h3>Öğrenci geri dönüşü</h3><strong style="font-size:30px">%64</strong></article></div></section>
-<section class="panel" id="roles"><div class="section-head"><div><span class="eyebrow">Yetki matrisi</span><h2>Kullanıcı ve roller</h2></div><button class="btn btn-primary">Kullanıcı davet et</button></div><div class="table-wrap"><table><thead><tr><th>Kullanıcı</th><th>Birim</th><th>Rol</th><th>Yetki</th></tr></thead><tbody><tr><td><b>Yönetim Admin</b></td><td>Öğrenci Dekanlığı</td><td>Super Admin</td><td><span class="status">Tam erişim</span></td></tr><tr><td>Ayşe Demir</td><td>Kariyer Merkezi</td><td>Organizatör</td><td>Etkinlik + rapor</td></tr><tr><td>Can Kaya</td><td>Yazılım Kulübü</td><td>Kulüp yöneticisi</td><td>Kendi etkinlikleri</td></tr></tbody></table></div></section></main></div>
-<div class="modal" id="eventModal"><div class="modal-card"><button class="close" onclick="this.closest('.modal').classList.remove('open')">×</button><span class="eyebrow">Yayın akışı</span><h2>Yeni etkinlik</h2><form onsubmit="addEvent(event)"><div class="field"><label>Etkinlik adı</label><input name="title" required placeholder="Yapay Zekâ Atölyesi"></div><div class="admin-form"><div class="field"><label>Kategori</label><select name="cat"><option>Challenge</option><option>Kariyer</option><option>Turnuva</option><option>Sosyal Sorumluluk</option></select></div><div class="field"><label>XP</label><input name="xp" type="number" min="0" value="200"></div><div class="field"><label>Tarih ve saat</label><input name="date" required placeholder="12 Eylül · 15:00"></div><div class="field"><label>Konum</label><input name="place" required placeholder="D Blok"></div><div class="field"><label>Kontenjan</label><input name="capacity" type="number" min="1" value="100"></div></div><button class="btn btn-primary" style="width:100%">Etkinliği yayınla</button></form></div></div><script src="assets/app.js"></script></body></html>
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Yönetim — DOU Campus</title>
+    <link rel="stylesheet" href="assets/styles.css" />
+    <link rel="stylesheet" href="assets/product.css" />
+  </head>
+  <body data-page="admin">
+    <div class="app">
+      <aside class="sidebar">
+        <a class="brand" href="index.html"><b>DOU</b> Campus</a>
+        <nav class="side-nav">
+          <button class="side-link active" data-panel="adminOverview">
+            ⌂ Yönetim özeti</button
+          ><button class="side-link" data-panel="manageEvents">
+            ◫ Etkinlik yönetimi</button
+          ><button class="side-link" data-panel="qrManage">
+            ⌁ QR ve katılım</button
+          ><button class="side-link" data-panel="manageChallenges">
+            ◎ Challenge yönetimi</button
+          ><button class="side-link" data-panel="manageRewards">
+            ◆ Ödül ve stok</button
+          ><button class="side-link" data-panel="analytics">↗ Analitik</button
+          ><button class="side-link" data-panel="approvals">
+            ✓ Onay merkezi</button
+          ><button class="side-link" data-panel="clubs">◇ Kulüpler</button
+          ><button class="side-link" data-panel="roles">○ Roller</button>
+        </nav>
+        <div class="side-bottom">
+          <div class="user-chip">
+            <div class="avatar">YA</div>
+            <div>
+              <b>Yönetim Admin</b
+              ><small style="display: block; color: #999">Tam yetki</small>
+            </div>
+          </div>
+        </div>
+      </aside>
+      <main class="main">
+        <header class="topbar">
+          <div class="actions">
+            <button id="menuBtn" class="btn btn-light mobile-menu">☰</button>
+            <div>
+              <small class="muted">Yönetim konsolu</small>
+              <h1 id="pageTitle">Yönetim özeti</h1>
+            </div>
+          </div>
+          <div class="actions">
+            <button
+              class="btn btn-primary btn-sm"
+              onclick="document.querySelector('#eventModal').classList.add('open')"
+            >
+              + Yeni etkinlik</button
+            ><button class="btn btn-ghost btn-sm" onclick="logout()">
+              Çıkış
+            </button>
+          </div>
+        </header>
+        <section class="panel active" id="adminOverview">
+          <div class="metric-grid">
+            <div class="metric">
+              <small>Aktif etkinlik</small
+              ><strong id="adminEventCount">0</strong>
+            </div>
+            <div class="metric">
+              <small>Toplam katılım</small><strong id="adminAttend">0</strong>
+            </div>
+            <div class="metric">
+              <small>QR doğrulama oranı</small><strong>%87</strong>
+            </div>
+            <div class="metric">
+              <small>Aktif öğrenci</small><strong>1.284</strong>
+            </div>
+          </div>
+          <div class="dashboard-grid">
+            <article class="card">
+              <span class="eyebrow">Son 7 gün</span>
+              <h3>Katılım ivmesi</h3>
+              <div
+                style="
+                  height: 220px;
+                  display: flex;
+                  align-items: end;
+                  gap: 12px;
+                  padding-top: 20px;
+                "
+              >
+                <div style="flex: 1; height: 70px; background: #eee"></div>
+                <div style="flex: 1; height: 96px; background: #eee"></div>
+                <div style="flex: 1; height: 84px; background: #eee"></div>
+                <div style="flex: 1; height: 140px; background: #eee"></div>
+                <div style="flex: 1; height: 116px; background: #eee"></div>
+                <div style="flex: 1; height: 172px; background: #c8102e"></div>
+                <div style="flex: 1; height: 152px; background: #eee"></div>
+              </div>
+            </article>
+            <article class="card">
+              <span class="eyebrow">Sistem durumu</span>
+              <h3>Operasyon merkezi</h3>
+              <div class="list">
+                <div class="list-item">
+                  <span>QR doğrulama servisi</span
+                  ><span class="status">Çalışıyor</span>
+                </div>
+                <div class="list-item">
+                  <span>Bildirim kuyruğu</span
+                  ><span class="status">Çalışıyor</span>
+                </div>
+                <div class="list-item">
+                  <span>Ödül stok uyarıları</span
+                  ><span class="status warn">2 kritik</span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+        <section class="panel" id="manageEvents">
+          <div class="toolbar">
+            <input class="search" placeholder="Etkinlik ara…" /><button
+              class="btn btn-primary"
+              onclick="document.querySelector('#eventModal').classList.add('open')"
+            >
+              Yeni etkinlik oluştur
+            </button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Etkinlik</th>
+                  <th>Kategori</th>
+                  <th>Tarih</th>
+                  <th>Doluluk</th>
+                  <th>Durum</th>
+                  <th>İşlem</th>
+                </tr>
+              </thead>
+              <tbody id="adminEvents"></tbody>
+            </table>
+          </div>
+        </section>
+        <section class="panel" id="qrManage">
+          <div class="dashboard-grid">
+            <article class="card" style="text-align: center">
+              <span class="eyebrow">Canlı etkinlik kodu</span>
+              <h2>Kampüs Quest QR</h2>
+              <div class="qrbox"></div>
+              <b id="qrToken">Henüz üretilmedi</b>
+              <p>Kalan süre: <strong id="qrTime">—</strong></p>
+              <button class="btn btn-primary" onclick="rotateQR()">
+                Süreli kod üret
+              </button>
+            </article>
+            <article class="card">
+              <span class="eyebrow">Doğrulama ilkeleri</span>
+              <h3>Sahte katılım koruması</h3>
+              <div class="list">
+                <div class="list-item">
+                  <span>İmzalı ve süreli anahtar</span
+                  ><span class="status">Aktif</span>
+                </div>
+                <div class="list-item">
+                  <span>Öğrenci başına tek kullanım</span
+                  ><span class="status">Aktif</span>
+                </div>
+                <div class="list-item">
+                  <span>Cihaz parmak izi kontrolü</span
+                  ><span class="status">Aktif</span>
+                </div>
+                <div class="list-item">
+                  <span>Etkinlik saat aralığı</span
+                  ><span class="status">Aktif</span>
+                </div>
+              </div>
+              <p class="hint">
+                Üretimde imza ve XP işlemi yalnızca sunucu tarafında yapılır.
+              </p>
+            </article>
+          </div>
+        </section>
+        <section class="panel" id="manageChallenges">
+          <div class="toolbar">
+            <div>
+              <span class="eyebrow">Görev motoru</span>
+              <h2>Challenge’lar</h2>
+            </div>
+            <button class="btn btn-primary">+ Challenge oluştur</button>
+          </div>
+          <div class="list">
+            <div class="list-item">
+              <div>
+                <b>3 farklı kulüp etkinliğine katıl</b>
+                <div class="muted">Otomatik doğrulama · 500 XP</div>
+              </div>
+              <span class="status">426 katılımcı</span>
+            </div>
+            <div class="list-item">
+              <div>
+                <b>Kampüs Quest serisi</b>
+                <div class="muted">QR adımları · 750 XP</div>
+              </div>
+              <span class="status">182 katılımcı</span>
+            </div>
+            <div class="list-item">
+              <div>
+                <b>İyilik elçisi</b>
+                <div class="muted">Yönetici onayı · 400 XP</div>
+              </div>
+              <span class="status warn">14 onay bekliyor</span>
+            </div>
+          </div>
+        </section>
+        <section class="panel" id="manageRewards">
+          <div class="toolbar">
+            <div>
+              <span class="eyebrow">Operasyon</span>
+              <h2>Ödül envanteri</h2>
+            </div>
+            <button class="btn btn-primary">+ Ödül ekle</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Ödül</th>
+                  <th>XP bedeli</th>
+                  <th>Stok</th>
+                  <th>Durum</th>
+                </tr>
+              </thead>
+              <tbody id="inventory"></tbody>
+            </table>
+          </div>
+        </section>
+        <section class="panel" id="analytics">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Karar destek</span>
+              <h2>Kampüs analitiği</h2>
+            </div>
+            <button class="btn btn-light">Raporu dışa aktar</button>
+          </div>
+          <div class="grid3">
+            <article class="card">
+              <small class="muted">En yüksek katılım</small>
+              <h3>Kariyer etkinlikleri</h3>
+              <strong style="font-size: 30px">%82</strong>
+            </article>
+            <article class="card">
+              <small class="muted">En aktif bölüm</small>
+              <h3>Yazılım Mühendisliği</h3>
+              <strong style="font-size: 30px">184K XP</strong>
+            </article>
+            <article class="card">
+              <small class="muted">30 günlük devam</small>
+              <h3>Öğrenci geri dönüşü</h3>
+              <strong style="font-size: 30px">%64</strong>
+            </article>
+          </div>
+        </section>
+        <section class="panel" id="approvals">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Kontrollü yayın</span>
+              <h2>Onay merkezi</h2>
+            </div>
+            <span class="status warn" id="approvalCount">3 bekleyen</span>
+          </div>
+          <div class="list" id="approvalList"></div>
+        </section>
+        <section class="panel" id="clubs">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Öğrenci toplulukları</span>
+              <h2>Kulüp performansı</h2>
+            </div>
+            <button class="btn btn-primary" onclick="inviteClubManager()">
+              Kulüp yöneticisi davet et
+            </button>
+          </div>
+          <div class="grid3" id="clubCards"></div>
+        </section>
+        <section class="panel" id="roles">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Yetki matrisi</span>
+              <h2>Kullanıcı ve roller</h2>
+            </div>
+            <button class="btn btn-primary">Kullanıcı davet et</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Kullanıcı</th>
+                  <th>Birim</th>
+                  <th>Rol</th>
+                  <th>Yetki</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><b>Yönetim Admin</b></td>
+                  <td>Öğrenci Dekanlığı</td>
+                  <td>Super Admin</td>
+                  <td><span class="status">Tam erişim</span></td>
+                </tr>
+                <tr>
+                  <td>Ayşe Demir</td>
+                  <td>Kariyer Merkezi</td>
+                  <td>Organizatör</td>
+                  <td>Etkinlik + rapor</td>
+                </tr>
+                <tr>
+                  <td>Can Kaya</td>
+                  <td>Yazılım Kulübü</td>
+                  <td>Kulüp yöneticisi</td>
+                  <td>Kendi etkinlikleri</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+    <div class="modal" id="eventModal">
+      <div class="modal-card">
+        <button
+          class="close"
+          onclick="this.closest('.modal').classList.remove('open')"
+        >
+          ×</button
+        ><span class="eyebrow">Yayın akışı</span>
+        <h2>Yeni etkinlik</h2>
+        <form onsubmit="addEvent(event)">
+          <div class="field">
+            <label>Etkinlik adı</label
+            ><input name="title" required placeholder="Yapay Zekâ Atölyesi" />
+          </div>
+          <div class="admin-form">
+            <div class="field">
+              <label>Kategori</label
+              ><select name="cat">
+                <option>Challenge</option>
+                <option>Kariyer</option>
+                <option>Turnuva</option>
+                <option>Sosyal Sorumluluk</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>XP</label
+              ><input name="xp" type="number" min="0" value="200" />
+            </div>
+            <div class="field">
+              <label>Tarih ve saat</label
+              ><input name="date" required placeholder="12 Eylül · 15:00" />
+            </div>
+            <div class="field">
+              <label>Konum</label
+              ><input name="place" required placeholder="D Blok" />
+            </div>
+            <div class="field">
+              <label>Kontenjan</label
+              ><input name="capacity" type="number" min="1" value="100" />
+            </div>
+          </div>
+          <button class="btn btn-primary" style="width: 100%">
+            Etkinliği yayınla
+          </button>
+        </form>
+      </div>
+    </div>
+    <script src="config.js"></script>
+    <script src="assets/app.js"></script>
+    <script src="assets/product.js"></script>
+  </body>
+</html>

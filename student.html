@@ -1,8 +1,279 @@
-<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Öğrenci Paneli — DOU Campus</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/styles.css"></head><body data-page="student"><div class="app"><aside class="sidebar"><a class="brand" href="index.html"><b>DOU</b> Campus</a><nav class="side-nav"><button class="side-link active" data-panel="overview">⌂ Genel bakış</button><button class="side-link" data-panel="events">◫ Etkinlikler</button><button class="side-link" data-panel="scan">⌁ QR doğrula</button><button class="side-link" data-panel="challenges">◎ Challenge’lar</button><button class="side-link" data-panel="rewards">◆ Ödül mağazası</button><button class="side-link" data-panel="league">↗ Kampüs ligi</button><button class="side-link" data-panel="profile">○ Profilim</button></nav><div class="side-bottom"><div class="user-chip"><div class="avatar">İD</div><div><b id="userName">Öğrenci</b><small style="display:block;color:#999">Öğrenci hesabı</small></div></div></div></aside><main class="main"><header class="topbar"><div class="actions"><button id="menuBtn" class="btn btn-light mobile-menu">☰</button><div><small class="muted">DOU Campus</small><h1 id="pageTitle">Genel bakış</h1></div></div><div class="actions"><button class="btn btn-light btn-sm">Bildirimler <span class="status warn">3</span></button><button class="btn btn-ghost btn-sm" onclick="logout()">Çıkış</button></div></header>
-<section class="panel active" id="overview"><div class="metric-grid"><div class="metric"><small>Toplam XP</small><strong id="xpValue">0</strong><div class="progress"><span style="width:68%"></span></div></div><div class="metric"><small>Katıldığın etkinlik</small><strong id="joinedValue">0</strong></div><div class="metric"><small>Açılan rozet</small><strong id="badgeValue">0</strong></div><div class="metric"><small>Kampüs sıralaması</small><strong id="rankValue">#—</strong></div></div><div class="dashboard-grid"><article class="card"><div class="section-head" style="margin-bottom:18px"><div><span class="eyebrow">Takvimin</span><h3 style="margin:6px 0">Yaklaşan kayıtların</h3></div></div><div class="list" id="upcomingList"></div></article><article class="card" style="background:#18181a;color:#fff"><span class="eyebrow" style="color:#ff607b">Haftalık seri</span><h2 style="font-size:38px;margin:12px 0">4 gün 🔥</h2><p style="color:#aaa">Yarın bir etkinliğe katılarak serini koru ve +100 bonus XP kazan.</p><div class="progress"><span style="width:72%"></span></div></article></div></section>
-<section class="panel" id="events"><div class="toolbar"><input class="search" placeholder="Etkinlik ara…"><div class="actions"><select class="search"><option>Tüm kategoriler</option><option>Challenge</option><option>Kariyer</option><option>Turnuva</option></select><button class="btn btn-light">Takvimim</button></div></div><div class="grid3" id="studentEvents"></div></section>
-<section class="panel" id="scan"><div class="dashboard-grid"><article class="card" style="text-align:center"><span class="eyebrow">Güvenli katılım</span><h2>Etkinlik QR’ını okut</h2><div class="qrbox"></div><p class="muted">Kamera izni ve cihaz doğrulamasından sonra tek kullanımlık katılım kaydı oluşturulur.</p><button class="btn btn-primary" onclick="scanQR()">Kamerayı aç ve doğrula</button></article><article class="card"><span class="eyebrow">Doğrulama sonucu</span><div id="scanResult" class="empty"><h3>Henüz tarama yok</h3><p>Etkinlik alanındaki aktif kodu okut.</p></div><div class="hint">Güvenlik: Süresi geçmiş, başka cihazda kullanılmış veya etkinlik saatinin dışındaki kodlar reddedilir.</div></article></div></section>
-<section class="panel" id="challenges"><div class="section-head"><div><span class="eyebrow">Aktif görevler</span><h2>Challenge merkezi</h2></div><p>Tek başına ya da takımınla görevleri tamamla. Kanıt gerektiren görevler kulüp yöneticisi tarafından onaylanır.</p></div><div class="list" id="challengeList"></div></section>
-<section class="panel" id="rewards"><div class="section-head"><div><span class="eyebrow">XP’ni değerlendir</span><h2>Ödül mağazası</h2></div><p>Stoklar kampüs işletmeleri ve öğrenci işleri tarafından yönetilir.</p></div><div class="grid3" id="rewardsList"></div></section>
-<section class="panel" id="league"><div class="section-head"><div><span class="eyebrow">2026 güz dönemi</span><h2>Bölüm ligi</h2></div></div><div class="table-wrap"><table><thead><tr><th>Sıra</th><th>Bölüm</th><th>Katılımcı</th><th>Toplam XP</th></tr></thead><tbody><tr><td>1</td><td><b>Yazılım Mühendisliği</b></td><td>248</td><td>184.200</td></tr><tr><td>2</td><td>Psikoloji</td><td>221</td><td>169.850</td></tr><tr><td>3</td><td>İşletme</td><td>207</td><td>151.440</td></tr><tr><td>4</td><td>Görsel İletişim Tasarımı</td><td>178</td><td>138.020</td></tr></tbody></table></div></section>
-<section class="panel" id="profile"><div class="dashboard-grid"><article class="card"><div class="avatar" style="width:72px;height:72px;font-size:24px">İD</div><h2>İlker Duran</h2><p class="muted">Yazılım Mühendisliği · 3. sınıf</p><div class="meta"><span>202312345</span><span>ilker@dogus.edu.tr</span></div><button class="btn btn-light" style="margin-top:20px">Profili düzenle</button></article><article class="card"><h3>Tercihler</h3><div class="list"><div class="list-item"><span>Etkinlik hatırlatmaları</span><input type="checkbox" checked></div><div class="list-item"><span>Challenge bildirimleri</span><input type="checkbox" checked></div><div class="list-item"><span>Lig güncellemeleri</span><input type="checkbox"></div></div></article></div></section></main></div><script src="assets/app.js"></script></body></html>
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Öğrenci Paneli — DOU Campus</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/styles.css" />
+    <link rel="stylesheet" href="assets/product.css" />
+  </head>
+  <body data-page="student">
+    <div class="app">
+      <aside class="sidebar">
+        <a class="brand" href="index.html"><b>DOU</b> Campus</a>
+        <nav class="side-nav">
+          <button class="side-link active" data-panel="overview">
+            ⌂ Genel bakış</button
+          ><button class="side-link" data-panel="events">◫ Etkinlikler</button
+          ><button class="side-link" data-panel="scan">⌁ QR doğrula</button
+          ><button class="side-link" data-panel="challenges">
+            ◎ Challenge’lar</button
+          ><button class="side-link" data-panel="rewards">
+            ◆ Ödül mağazası</button
+          ><button class="side-link" data-panel="league">↗ Kampüs ligi</button
+          ><button class="side-link" data-panel="transcript">
+            ▤ Sosyal transkript</button
+          ><button class="side-link" data-panel="notifications">
+            ◌ Bildirimler</button
+          ><button class="side-link" data-panel="profile">○ Profilim</button>
+        </nav>
+        <div class="side-bottom">
+          <div class="user-chip">
+            <div class="avatar">DÖ</div>
+            <div>
+              <b id="userName">Öğrenci</b
+              ><small style="display: block; color: #999">Öğrenci hesabı</small>
+            </div>
+          </div>
+        </div>
+      </aside>
+      <main class="main">
+        <header class="topbar">
+          <div class="actions">
+            <button id="menuBtn" class="btn btn-light mobile-menu">☰</button>
+            <div>
+              <small class="muted">DOU Campus</small>
+              <h1 id="pageTitle">Genel bakış</h1>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn btn-light btn-sm">
+              Bildirimler <span class="status warn">3</span></button
+            ><button class="btn btn-ghost btn-sm" onclick="logout()">
+              Çıkış
+            </button>
+          </div>
+        </header>
+        <section class="panel active" id="overview">
+          <div class="metric-grid">
+            <div class="metric">
+              <small>Toplam XP</small><strong id="xpValue">0</strong>
+              <div class="progress"><span style="width: 68%"></span></div>
+            </div>
+            <div class="metric">
+              <small>Katıldığın etkinlik</small
+              ><strong id="joinedValue">0</strong>
+            </div>
+            <div class="metric">
+              <small>Açılan rozet</small><strong id="badgeValue">0</strong>
+            </div>
+            <div class="metric">
+              <small>Kampüs sıralaması</small><strong id="rankValue">#—</strong>
+            </div>
+          </div>
+          <div class="dashboard-grid">
+            <article class="card">
+              <div class="section-head" style="margin-bottom: 18px">
+                <div>
+                  <span class="eyebrow">Takvimin</span>
+                  <h3 style="margin: 6px 0">Yaklaşan kayıtların</h3>
+                </div>
+              </div>
+              <div class="list" id="upcomingList"></div>
+            </article>
+            <article class="card" style="background: #18181a; color: #fff">
+              <span class="eyebrow" style="color: #ff607b">Haftalık seri</span>
+              <h2 style="font-size: 38px; margin: 12px 0">4 gün 🔥</h2>
+              <p style="color: #aaa">
+                Yarın bir etkinliğe katılarak serini koru ve +100 bonus XP
+                kazan.
+              </p>
+              <div class="progress"><span style="width: 72%"></span></div>
+            </article>
+          </div>
+        </section>
+        <section class="panel" id="events">
+          <div class="toolbar">
+            <input class="search" placeholder="Etkinlik ara…" />
+            <div class="actions">
+              <select class="search">
+                <option>Tüm kategoriler</option>
+                <option>Challenge</option>
+                <option>Kariyer</option>
+                <option>Turnuva</option></select
+              ><button class="btn btn-light">Takvimim</button>
+            </div>
+          </div>
+          <div class="grid3" id="studentEvents"></div>
+        </section>
+        <section class="panel" id="scan">
+          <div class="dashboard-grid">
+            <article class="card" style="text-align: center">
+              <span class="eyebrow">Güvenli katılım</span>
+              <h2>Etkinlik QR’ını okut</h2>
+              <div class="qrbox"></div>
+              <p class="muted">
+                Kamera izni ve cihaz doğrulamasından sonra tek kullanımlık
+                katılım kaydı oluşturulur.
+              </p>
+              <button class="btn btn-primary" onclick="scanQR()">
+                Kamerayı aç ve doğrula
+              </button>
+            </article>
+            <article class="card">
+              <span class="eyebrow">Doğrulama sonucu</span>
+              <div id="scanResult" class="empty">
+                <h3>Henüz tarama yok</h3>
+                <p>Etkinlik alanındaki aktif kodu okut.</p>
+              </div>
+              <div class="hint">
+                Güvenlik: Süresi geçmiş, başka cihazda kullanılmış veya etkinlik
+                saatinin dışındaki kodlar reddedilir.
+              </div>
+            </article>
+          </div>
+        </section>
+        <section class="panel" id="challenges">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Aktif görevler</span>
+              <h2>Challenge merkezi</h2>
+            </div>
+            <p>
+              Tek başına ya da takımınla görevleri tamamla. Kanıt gerektiren
+              görevler kulüp yöneticisi tarafından onaylanır.
+            </p>
+          </div>
+          <div class="list" id="challengeList"></div>
+        </section>
+        <section class="panel" id="rewards">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">XP’ni değerlendir</span>
+              <h2>Ödül mağazası</h2>
+            </div>
+            <p>
+              Stoklar kampüs işletmeleri ve öğrenci işleri tarafından yönetilir.
+            </p>
+          </div>
+          <div class="grid3" id="rewardsList"></div>
+        </section>
+        <section class="panel" id="league">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">2026 güz dönemi</span>
+              <h2>Bölüm ligi</h2>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Sıra</th>
+                  <th>Bölüm</th>
+                  <th>Katılımcı</th>
+                  <th>Toplam XP</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td><b>Yazılım Mühendisliği</b></td>
+                  <td>248</td>
+                  <td>184.200</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Psikoloji</td>
+                  <td>221</td>
+                  <td>169.850</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>İşletme</td>
+                  <td>207</td>
+                  <td>151.440</td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>Görsel İletişim Tasarımı</td>
+                  <td>178</td>
+                  <td>138.020</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <section class="panel" id="transcript">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Doğrulanmış gelişim kaydı</span>
+              <h2>Sosyal transkriptim</h2>
+            </div>
+            <button class="btn btn-light" onclick="downloadTranscript()">
+              PDF görünümünü yazdır
+            </button>
+          </div>
+          <div id="transcriptContent"></div>
+        </section>
+        <section class="panel" id="notifications">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Kişisel akış</span>
+              <h2>Bildirim merkezi</h2>
+            </div>
+            <button class="btn btn-light" onclick="markAllRead()">
+              Tümünü okundu yap
+            </button>
+          </div>
+          <div class="list" id="notificationList"></div>
+        </section>
+        <section class="panel" id="profile">
+          <div class="dashboard-grid">
+            <article class="card">
+              <div
+                class="avatar"
+                style="width: 72px; height: 72px; font-size: 24px"
+              >
+                DÖ
+              </div>
+              <h2>Demo Öğrenci</h2>
+              <p class="muted">Yazılım Mühendisliği · 3. sınıf</p>
+              <div class="meta">
+                <span>999999999</span><span>ogrenci.demo@dogus.edu.tr</span>
+              </div>
+              <button class="btn btn-light" style="margin-top: 20px">
+                Profili düzenle
+              </button>
+            </article>
+            <article class="card">
+              <h3>Tercihler</h3>
+              <div class="list">
+                <div class="list-item">
+                  <span>Etkinlik hatırlatmaları</span
+                  ><input type="checkbox" checked />
+                </div>
+                <div class="list-item">
+                  <span>Challenge bildirimleri</span
+                  ><input type="checkbox" checked />
+                </div>
+                <div class="list-item">
+                  <span>Lig güncellemeleri</span><input type="checkbox" />
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script src="config.js"></script>
+    <script src="assets/app.js"></script>
+    <script src="assets/product.js"></script>
+  </body>
+</html>

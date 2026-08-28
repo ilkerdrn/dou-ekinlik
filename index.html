@@ -1,9 +1,240 @@
-<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Doğuş Üniversitesi kampüs etkinlik, challenge ve ödül platformu."><title>DOU Campus — Kampüse katıl, iz bırak</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/styles.css"></head><body>
-<header class="wrap"><nav class="nav"><a class="brand" href="index.html"><b>DOU</b> Campus</a><div class="navlinks"><a href="#etkinlikler">Etkinlikler</a><a href="#nasil">Nasıl çalışır?</a><a href="#faydalar">Kampüs deneyimi</a></div><div class="actions"><a class="btn btn-ghost" href="admin.html">Yönetim</a><button class="btn btn-primary" data-login>Öğrenci girişi</button></div></nav></header>
-<main><section class="hero"><div class="wrap hero-grid"><div><span class="eyebrow">Doğuş Üniversitesi · Kampüs deneyimi</span><h1>Kampüse katıl.<br><span>İz bırak.</span></h1><p class="lead">Etkinlikleri keşfet, challenge’lara katıl, kampüsteki QR kodla katılımını doğrula. XP kazan, bölümünü zirveye taşı ve ödülleri aç.</p><div class="actions" style="margin-top:30px"><button class="btn btn-primary" data-login>Deneyime başla</button><a class="btn btn-light" href="#nasil">Nasıl çalışıyor?</a></div><div class="meta" style="margin-top:24px"><span>✓ Tek kampüs hesabı</span><span>✓ Güvenli QR doğrulama</span><span>✓ Gerçek zamanlı XP</span></div></div><div class="hero-card"><div class="phone"><div class="phone-top"><div><small class="muted">Günaydın, İlker</small><h3 style="margin:4px 0">Bugün kampüste ne var?</h3></div><span class="xp-pill">1.280 XP</span></div><div class="event-mini"><span class="badge" style="width:max-content">BUGÜN · 17:30</span><h3>Kampüs Quest:<br>Gizli Rota</h3><small>Çengelköy Kampüsü · +350 XP</small></div><div class="stats"><div class="stat"><strong>7</strong><span>Etkinlik</span></div><div class="stat"><strong>#24</strong><span>Sıralama</span></div><div class="stat"><strong>4</strong><span>Rozet</span></div></div></div></div></div></section>
-<section id="faydalar"><div class="wrap"><div class="section-head"><div><span class="eyebrow">Sadece bir duyuru panosu değil</span><h2>Kampüsün oyun alanı.</h2></div><p>Öğrenciyi izleyen değil, harekete geçiren bir deneyim. Katılımın her adımı görünür, ölçülebilir ve ödüllendirilebilir.</p></div><div class="grid3"><article class="card"><div class="iconbox">⌁</div><h3>Keşfet ve katıl</h3><p>Kulüp, kariyer, spor ve sosyal sorumluluk etkinliklerini ilgi alanına göre tek yerde gör.</p></article><article class="card"><div class="iconbox">◎</div><h3>QR ile doğrula</h3><p>Etkinlik alanındaki süreli QR’ı okut. Tek cihaz ve tek kullanım kontrolüyle XP anında hesabına işlensin.</p></article><article class="card"><div class="iconbox">↗</div><h3>Yüksel ve kazan</h3><p>Challenge tamamla, rozet aç, bölüm liginde yüksel ve XP’lerini kampüs ödüllerine dönüştür.</p></article></div></div></section>
-<section id="etkinlikler" style="background:#f2f0ef"><div class="wrap"><div class="section-head"><div><span class="eyebrow">Yaklaşan deneyimler</span><h2>Kampüste sırada ne var?</h2></div><button class="btn btn-light" data-login>Tümünü keşfet</button></div><div class="grid3" id="publicEvents"></div></div></section>
-<section id="nasil"><div class="wrap feature-band"><div><span class="eyebrow" style="color:#ff607b">Dört adımda katılım</span><h2 style="font-size:46px;letter-spacing:-2px;margin:14px 0">Gel, okut,<br>puanı kap.</h2><p style="color:#b8b7bb;line-height:1.7">Sahte katılımı azaltan süreli QR, cihaz kontrolü ve tek kullanım kaydıyla güvenilir kampüs analitiği.</p><button class="btn btn-primary" data-login>Öğrenci panelini aç</button></div><div class="steps"><div class="step"><b>1</b><div><strong>Etkinliği keşfet</strong><div class="muted">Filtrele, detayları gör ve yerini ayır.</div></div></div><div class="step"><b>2</b><div><strong>Etkinlik alanına gel</strong><div class="muted">Sadece doğru zaman ve konumda doğrulama.</div></div></div><div class="step"><b>3</b><div><strong>Süreli QR’ı okut</strong><div class="muted">Her öğrenci için tek katılım kaydı.</div></div></div><div class="step"><b>4</b><div><strong>XP ve rozetini al</strong><div class="muted">Profil, lig ve ödüller anında güncellenir.</div></div></div></div></div></section>
-<section><div class="wrap cta"><span style="font-weight:800">KAMPÜS SENİ BEKLİYOR</span><h2>Bir sonraki hikâyen burada.</h2><p>DOU hesabınla giriş yap, kişisel kampüs akışını oluştur.</p><button class="btn btn-dark" data-login>Hemen katıl</button></div></section></main>
-<footer class="footer"><div class="wrap"><a class="brand"><b>DOU</b> Campus</a><span>Doğuş Üniversitesi öğrenci deneyimi projesi · Demo sürüm</span></div></footer>
-<div class="modal" id="loginModal"><div class="modal-card"><button class="close" onclick="closeLogin()">×</button><span class="eyebrow">Güvenli kampüs girişi</span><h2>Tekrar hoş geldin.</h2><p class="muted">Öğrenci numaran ve üniversite hesabınla devam et.</p><form onsubmit="login(event)"><div class="field"><label>Öğrenci numarası / yönetici e-postası</label><input id="loginId" autocomplete="username" placeholder="Örn. 202312345" required></div><div class="field"><label>Şifre</label><input id="loginPw" type="password" autocomplete="current-password" placeholder="Üniversite hesabı şifren" required></div><button class="btn btn-primary" style="width:100%">Giriş yap</button></form><p class="hint">Demo öğrenci: <b>202312345</b> / <b>demo1234</b><br>Demo yönetim: <b>admin@dogus.edu.tr</b> / <b>admin1234</b></p></div></div><script src="assets/app.js"></script></body></html>
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Doğuş Üniversitesi kampüs etkinlik, challenge ve ödül platformu."
+    />
+    <title>DOU Campus — Kampüse katıl, iz bırak</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/styles.css" />
+    <link rel="stylesheet" href="assets/product.css" />
+  </head>
+  <body>
+    <header class="wrap">
+      <nav class="nav">
+        <a class="brand" href="index.html"><b>DOU</b> Campus</a>
+        <div class="navlinks">
+          <a href="#etkinlikler">Etkinlikler</a
+          ><a href="#nasil">Nasıl çalışır?</a
+          ><a href="#faydalar">Kampüs deneyimi</a>
+        </div>
+        <div class="actions">
+          <a class="btn btn-ghost" href="admin.html">Yönetim</a
+          ><button class="btn btn-primary" data-login>Öğrenci girişi</button>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <section class="hero">
+        <div class="wrap hero-grid">
+          <div>
+            <span class="eyebrow">Doğuş Üniversitesi · Kampüs deneyimi</span>
+            <h1>Kampüse katıl.<br /><span>İz bırak.</span></h1>
+            <p class="lead">
+              Etkinlikleri keşfet, challenge’lara katıl, kampüsteki QR kodla
+              katılımını doğrula. XP kazan, bölümünü zirveye taşı ve ödülleri
+              aç.
+            </p>
+            <div class="actions" style="margin-top: 30px">
+              <button class="btn btn-primary" data-login>Deneyime başla</button
+              ><a class="btn btn-light" href="#nasil">Nasıl çalışıyor?</a>
+            </div>
+            <div class="meta" style="margin-top: 24px">
+              <span>✓ Tek kampüs hesabı</span><span>✓ Güvenli QR doğrulama</span
+              ><span>✓ Gerçek zamanlı XP</span>
+            </div>
+          </div>
+          <div class="hero-card">
+            <div class="phone">
+              <div class="phone-top">
+                <div>
+                  <small class="muted">Günaydın, Demo Öğrenci</small>
+                  <h3 style="margin: 4px 0">Bugün kampüste ne var?</h3>
+                </div>
+                <span class="xp-pill">1.280 XP</span>
+              </div>
+              <div class="event-mini">
+                <span class="badge" style="width: max-content"
+                  >BUGÜN · 17:30</span
+                >
+                <h3>Kampüs Quest:<br />Gizli Rota</h3>
+                <small>Çengelköy Kampüsü · +350 XP</small>
+              </div>
+              <div class="stats">
+                <div class="stat"><strong>7</strong><span>Etkinlik</span></div>
+                <div class="stat">
+                  <strong>#24</strong><span>Sıralama</span>
+                </div>
+                <div class="stat"><strong>4</strong><span>Rozet</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="faydalar">
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Sadece bir duyuru panosu değil</span>
+              <h2>Kampüsün oyun alanı.</h2>
+            </div>
+            <p>
+              Öğrenciyi izleyen değil, harekete geçiren bir deneyim. Katılımın
+              her adımı görünür, ölçülebilir ve ödüllendirilebilir.
+            </p>
+          </div>
+          <div class="grid3">
+            <article class="card">
+              <div class="iconbox">⌁</div>
+              <h3>Keşfet ve katıl</h3>
+              <p>
+                Kulüp, kariyer, spor ve sosyal sorumluluk etkinliklerini ilgi
+                alanına göre tek yerde gör.
+              </p>
+            </article>
+            <article class="card">
+              <div class="iconbox">◎</div>
+              <h3>QR ile doğrula</h3>
+              <p>
+                Etkinlik alanındaki süreli QR’ı okut. Tek cihaz ve tek kullanım
+                kontrolüyle XP anında hesabına işlensin.
+              </p>
+            </article>
+            <article class="card">
+              <div class="iconbox">↗</div>
+              <h3>Yüksel ve kazan</h3>
+              <p>
+                Challenge tamamla, rozet aç, bölüm liginde yüksel ve XP’lerini
+                kampüs ödüllerine dönüştür.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section id="etkinlikler" style="background: #f2f0ef">
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Yaklaşan deneyimler</span>
+              <h2>Kampüste sırada ne var?</h2>
+            </div>
+            <button class="btn btn-light" data-login>Tümünü keşfet</button>
+          </div>
+          <div class="grid3" id="publicEvents"></div>
+        </div>
+      </section>
+      <section id="nasil">
+        <div class="wrap feature-band">
+          <div>
+            <span class="eyebrow" style="color: #ff607b"
+              >Dört adımda katılım</span
+            >
+            <h2 style="font-size: 46px; letter-spacing: -2px; margin: 14px 0">
+              Gel, okut,<br />puanı kap.
+            </h2>
+            <p style="color: #b8b7bb; line-height: 1.7">
+              Sahte katılımı azaltan süreli QR, cihaz kontrolü ve tek kullanım
+              kaydıyla güvenilir kampüs analitiği.
+            </p>
+            <button class="btn btn-primary" data-login>
+              Öğrenci panelini aç
+            </button>
+          </div>
+          <div class="steps">
+            <div class="step">
+              <b>1</b>
+              <div>
+                <strong>Etkinliği keşfet</strong>
+                <div class="muted">Filtrele, detayları gör ve yerini ayır.</div>
+              </div>
+            </div>
+            <div class="step">
+              <b>2</b>
+              <div>
+                <strong>Etkinlik alanına gel</strong>
+                <div class="muted">
+                  Sadece doğru zaman ve konumda doğrulama.
+                </div>
+              </div>
+            </div>
+            <div class="step">
+              <b>3</b>
+              <div>
+                <strong>Süreli QR’ı okut</strong>
+                <div class="muted">Her öğrenci için tek katılım kaydı.</div>
+              </div>
+            </div>
+            <div class="step">
+              <b>4</b>
+              <div>
+                <strong>XP ve rozetini al</strong>
+                <div class="muted">
+                  Profil, lig ve ödüller anında güncellenir.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div class="wrap cta">
+          <span style="font-weight: 800">KAMPÜS SENİ BEKLİYOR</span>
+          <h2>Bir sonraki hikâyen burada.</h2>
+          <p>DOU hesabınla giriş yap, kişisel kampüs akışını oluştur.</p>
+          <button class="btn btn-dark" data-login>Hemen katıl</button>
+        </div>
+      </section>
+    </main>
+    <footer class="footer">
+      <div class="wrap">
+        <a class="brand"><b>DOU</b> Campus</a
+        ><span>Doğuş Üniversitesi öğrenci deneyimi projesi · Demo sürüm</span>
+      </div>
+    </footer>
+    <div class="modal" id="loginModal">
+      <div class="modal-card">
+        <button class="close" onclick="closeLogin()">×</button
+        ><span class="eyebrow">Güvenli kampüs girişi</span>
+        <h2>Tekrar hoş geldin.</h2>
+        <p class="muted">Öğrenci numaran ve üniversite hesabınla devam et.</p>
+        <form onsubmit="login(event)">
+          <div class="field">
+            <label>Öğrenci numarası / yönetici e-postası</label
+            ><input
+              id="loginId"
+              autocomplete="username"
+              placeholder="Örn. 999999999"
+              required
+            />
+          </div>
+          <div class="field">
+            <label>Şifre</label
+            ><input
+              id="loginPw"
+              type="password"
+              autocomplete="current-password"
+              placeholder="Üniversite hesabı şifren"
+              required
+            />
+          </div>
+          <button class="btn btn-primary" style="width: 100%">Giriş yap</button>
+        </form>
+        <p class="hint">
+          Demo öğrenci: <b>999999999</b> / <b>demo1234</b><br />Demo yönetim:
+          <b>admin@dogus.edu.tr</b> / <b>admin1234</b>
+        </p>
+      </div>
+    </div>
+    <script src="config.js"></script>
+    <script src="assets/app.js"></script>
+    <script src="assets/product.js"></script>
+  </body>
+</html>

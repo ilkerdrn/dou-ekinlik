@@ -1,1 +1,1 @@
-window.DOU_CONFIG={mode:'demo',allowedDomain:'dogus.edu.tr'};
+window.DOU_CONFIG = { mode: "demo", allowedDomain: "dogus.edu.tr" };

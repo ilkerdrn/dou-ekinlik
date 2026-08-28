@@ -1,33 +1,511 @@
-const seed={events:[{id:1,title:'Kampüs Quest: Gizli Rota',date:'26 Ağustos · 17:30',place:'Çengelköy Kampüsü',cat:'Challenge',xp:350,capacity:120,joined:84,color:''},{id:2,title:'Girişimcilik Zirvesi',date:'28 Ağustos · 14:00',place:'D Blok Konferans',cat:'Kariyer',xp:220,capacity:200,joined:142,color:'purple'},{id:3,title:'Sahilde İyilik Koşusu',date:'31 Ağustos · 09:00',place:'Üsküdar Sahil',cat:'Sosyal Sorumluluk',xp:300,capacity:150,joined:106,color:'blue'},{id:4,title:'E-Spor Gece Ligi',date:'3 Eylül · 19:00',place:'Öğrenci Merkezi',cat:'Turnuva',xp:280,capacity:64,joined:58,color:'purple'},{id:5,title:'Fotoğraf Avı',date:'5 Eylül · 16:00',place:'Kampüs Geneli',cat:'Challenge',xp:180,capacity:100,joined:43,color:'blue'},{id:6,title:'Mezunlarla Kahve',date:'8 Eylül · 15:00',place:'Fuaye Alanı',cat:'Kariyer',xp:150,capacity:80,joined:35,color:''}],challenges:[{id:1,title:'3 farklı kulüp etkinliğine katıl',reward:500,progress:2,total:3},{id:2,title:'Kampüs Quest serisini tamamla',reward:750,progress:3,total:5},{id:3,title:'Bir arkadaşını etkinliğe davet et',reward:200,progress:0,total:1}],rewards:[{id:1,title:'Kampüs Kahvesi',cost:350,stock:42},{id:2,title:'DOU Bez Çanta',cost:900,stock:18},{id:3,title:'Yemekhane Menüsü',cost:600,stock:25},{id:4,title:'Konser Öncelikli Giriş',cost:1400,stock:8}]};
-const Store={get(k,f){try{return JSON.parse(localStorage.getItem('dou_'+k))??f}catch{return f}},set(k,v){localStorage.setItem('dou_'+k,JSON.stringify(v))},init(){if(!this.get('seeded',false)){this.set('events',seed.events);this.set('challenges',seed.challenges);this.set('rewards',seed.rewards);this.set('joined',[1,2]);this.set('favorites',[3]);this.set('xp',1280);this.set('scans',[]);this.set('seeded',true)}}};Store.init();
-const $=(s,p=document)=>p.querySelector(s),$$=(s,p=document)=>[...p.querySelectorAll(s)];
-function toast(msg){let t=$('#toast');if(!t){t=document.createElement('div');t.id='toast';t.className='toast';document.body.append(t)}t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600)}
-function openLogin(){$('#loginModal')?.classList.add('open')}function closeLogin(){$('#loginModal')?.classList.remove('open')}
-function login(e){e.preventDefault();const id=$('#loginId').value.trim(),pw=$('#loginPw').value;if((/^\d{6,}$/.test(id)&&pw.length>=4)||id.includes('@')){Store.set('session',{role:id.startsWith('admin')?'admin':'student',id,name:id.startsWith('admin')?'Yönetici':'İlker Duran'});location.href=id.startsWith('admin')?'admin.html':'student.html'}else toast('Bilgileri kontrol et. Demo bilgileri formun altında.')}
-function logout(){Store.set('session',null);location.href='index.html'}
-function requireRole(role){const s=Store.get('session',null);if(!s||s.role!==role)location.href='index.html';return s}
-function renderPublic(){const box=$('#publicEvents');if(!box)return;box.innerHTML=Store.get('events',seed.events).slice(0,3).map(eventCard).join('')}
-function eventCard(e){return `<article class="card event-card"><div class="event-cover ${e.color||''}"><span class="badge">${e.cat}</span><span class="badge">+${e.xp} XP</span></div><div class="event-body"><div class="meta"><span>${e.date}</span><span>${e.place}</span></div><h3>${e.title}</h3><button class="btn btn-light btn-sm" onclick="eventAction(${e.id})">Detayları gör →</button></div></article>`}
-function eventAction(id){if(location.pathname.endsWith('index.html')||location.pathname.endsWith('/'))openLogin();else toggleJoin(id)}
-function setupNav(){ $$('.side-link[data-panel]').forEach(b=>b.onclick=()=>{$$('.side-link').forEach(x=>x.classList.remove('active'));b.classList.add('active');$$('.panel').forEach(x=>x.classList.remove('active'));$('#'+b.dataset.panel).classList.add('active');$('#pageTitle').textContent=b.textContent.trim();$('.sidebar').classList.remove('open')});$('#menuBtn')?.addEventListener('click',()=>$('.sidebar').classList.toggle('open'))}
-function initStudent(){const s=requireRole('student');$('#userName').textContent=s.name;setupNav();renderStudent()}
-function renderStudent(){const events=Store.get('events',seed.events),joined=Store.get('joined',[]),favs=Store.get('favorites',[]),xp=Store.get('xp',0);$('#xpValue').textContent=xp.toLocaleString('tr-TR');$('#joinedValue').textContent=joined.length;$('#badgeValue').textContent=Math.floor(xp/500);$('#rankValue').textContent='#24';$('#studentEvents').innerHTML=events.map(e=>`<article class="card event-card"><div class="event-cover ${e.color||''}"><span class="badge">${e.cat}</span><button class="badge" style="border:0;color:white" onclick="toggleFav(${e.id})">${favs.includes(e.id)?'♥':'♡'}</button></div><div class="event-body"><div class="meta"><span>${e.date}</span><span>${e.place}</span></div><h3>${e.title}</h3><div class="actions"><button class="btn ${joined.includes(e.id)?'btn-light':'btn-primary'} btn-sm" onclick="toggleJoin(${e.id})">${joined.includes(e.id)?'Kaydı iptal et':'Katıl'}</button><span class="xp-pill">+${e.xp} XP</span></div></div></article>`).join('');$('#upcomingList').innerHTML=events.filter(e=>joined.includes(e.id)).map(e=>`<div class="list-item"><div><b>${e.title}</b><div class="muted">${e.date}</div></div><span class="status">Kayıtlı</span></div>`).join('');$('#challengeList').innerHTML=Store.get('challenges',seed.challenges).map(c=>`<div class="list-item"><div style="flex:1"><b>${c.title}</b><div class="progress" style="margin-top:10px"><span style="width:${c.progress/c.total*100}%"></span></div></div><b>+${c.reward}</b></div>`).join('');$('#rewardsList').innerHTML=Store.get('rewards',seed.rewards).map(r=>`<div class="card"><div class="iconbox">◆</div><h3>${r.title}</h3><p>${r.stock} adet kaldı</p><button class="btn btn-primary btn-sm" onclick="redeem(${r.id})">${r.cost} XP ile al</button></div>`).join('')}
-function toggleJoin(id){let x=Store.get('joined',[]);x=x.includes(id)?x.filter(i=>i!==id):[...x,id];Store.set('joined',x);toast(x.includes(id)?'Etkinlik kaydın oluşturuldu':'Etkinlik kaydın iptal edildi');renderStudent()}
-function toggleFav(id){let x=Store.get('favorites',[]);x=x.includes(id)?x.filter(i=>i!==id):[...x,id];Store.set('favorites',x);renderStudent()}
-function redeem(id){const rewards=Store.get('rewards',seed.rewards),r=rewards.find(x=>x.id===id),xp=Store.get('xp',0);if(xp<r.cost)return toast('Bu ödül için yeterli XP yok');if(r.stock<1)return toast('Ödül stoğu tükendi');r.stock--;Store.set('rewards',rewards);Store.set('xp',xp-r.cost);toast('Ödül kodun oluşturuldu: DOU-'+Math.random().toString(36).slice(2,8).toUpperCase());renderStudent()}
-function completeScan(){const joined=Store.get('joined',[]);if(!joined.length)return toast('Önce bir etkinliğe kayıt ol');const id=joined.find(x=>!Store.get('scans',[]).includes(x));if(!id)return toast('Kayıtlı etkinliklerinin QR katılımı zaten doğrulandı');const e=Store.get('events',seed.events).find(x=>x.id===id),scans=[...Store.get('scans',[]),id];Store.set('scans',scans);Store.set('xp',Store.get('xp',0)+e.xp);audit('attendance.verify',{eventId:id});$('#scanResult').innerHTML=`<span class="status">Doğrulandı</span><h3>${e.title}</h3><p>Bu cihaz için tek kullanımlık katılım doğrulandı. +${e.xp} XP hesabına işlendi.</p>`;toast('Katılım doğrulandı!');renderStudent()}
-async function scanQR(){if(!navigator.mediaDevices?.getUserMedia||!('BarcodeDetector'in window)){toast('Bu tarayıcıda kamera QR desteği yok; demo doğrulaması çalıştırıldı');return completeScan()}let stream;try{stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});const video=document.createElement('video');video.srcObject=stream;video.setAttribute('playsinline','');await video.play();$('#scanResult').innerHTML='<b>Kamera açık</b><p>QR kodu kameraya göster…</p>';const detector=new BarcodeDetector({formats:['qr_code']});const until=Date.now()+20000;while(Date.now()<until){const codes=await detector.detect(video);if(codes.length){audit('qr.read',{valueLength:codes[0].rawValue.length});completeScan();return}await new Promise(r=>setTimeout(r,250))}toast('QR bulunamadı; tekrar dene')}catch(e){toast('Kamera açılamadı. Tarayıcı iznini kontrol et');audit('camera.error',{message:String(e)})}finally{stream?.getTracks().forEach(t=>t.stop())}}
-function initAdmin(){requireRole('admin');setupNav();$$('button').forEach(b=>{if(b.textContent.includes('Challenge oluştur'))b.onclick=addChallenge;if(b.textContent.includes('Ödül ekle'))b.onclick=addReward;if(b.textContent.includes('Raporu dışa'))b.onclick=exportCSV});renderAdmin()}
-function renderAdmin(){const events=Store.get('events',seed.events),rewards=Store.get('rewards',seed.rewards);$('#adminEventCount').textContent=events.length;$('#adminAttend').textContent=events.reduce((a,b)=>a+b.joined,0);$('#adminEvents').innerHTML=events.map(e=>`<tr><td><b>${e.title}</b></td><td>${e.cat}</td><td>${e.date}</td><td>${e.joined}/${e.capacity}</td><td><span class="status">Yayında</span></td><td><button class="btn btn-light btn-sm" onclick="deleteEvent(${e.id})">Sil</button></td></tr>`).join('');$('#inventory').innerHTML=rewards.map(r=>`<tr><td><b>${r.title}</b></td><td>${r.cost} XP</td><td>${r.stock}</td><td><span class="status ${r.stock<10?'warn':''}">${r.stock<10?'Kritik':'Yeterli'}</span></td></tr>`).join('')}
-function addEvent(e){e.preventDefault();const events=Store.get('events',seed.events),f=new FormData(e.target);events.unshift({id:Date.now(),title:f.get('title'),cat:f.get('cat'),date:f.get('date'),place:f.get('place'),xp:+f.get('xp'),capacity:+f.get('capacity'),joined:0,color:'purple'});Store.set('events',events);e.target.reset();$('#eventModal').classList.remove('open');toast('Etkinlik yayınlandı');renderAdmin()}
-function deleteEvent(id){Store.set('events',Store.get('events',seed.events).filter(e=>e.id!==id));toast('Etkinlik kaldırıldı');renderAdmin()}
-function rotateQR(){const token='DOU-'+Date.now().toString(36).toUpperCase();$('#qrToken').textContent=token;$('#qrTime').textContent='60 sn';let n=60,el=$('#qrTime'),timer=setInterval(()=>{n--;el.textContent=n+' sn';if(!n){clearInterval(timer);el.textContent='Süresi doldu'}},1000);toast('Yeni tek kullanımlık QR anahtarı üretildi')}
-function deviceIdentity(){let id=Store.get('device',null);if(!id){id={id:crypto.randomUUID?.()||Math.random().toString(36).slice(2),verifiedAt:new Date().toISOString(),agent:navigator.userAgent.slice(0,120)};Store.set('device',id)}return id}
-function audit(action,meta={}){const logs=Store.get('audit',[]);logs.unshift({at:new Date().toISOString(),action,device:deviceIdentity().id,...meta});Store.set('audit',logs.slice(0,250))}
-async function signInMicrosoft(){const c=window.DOU_CONFIG||{};if(c.mode!=='supabase'||!c.supabaseUrl||!c.supabasePublishableKey)return toast('Microsoft 365 bağlantısı üretim yapılandırması bekliyor');try{const {createClient}=await import('https://esm.sh/@supabase/supabase-js@2.57.4');const sb=createClient(c.supabaseUrl,c.supabasePublishableKey);await sb.auth.signInWithOAuth({provider:'azure',options:{scopes:'email',redirectTo:location.origin+location.pathname}})}catch(e){toast('Microsoft oturumu başlatılamadı');audit('auth.azure.error',{message:String(e)})}}
-function exportCSV(){const events=Store.get('events',seed.events),rows=[['Etkinlik','Kategori','Tarih','Konum','Katılım','Kontenjan'],...events.map(e=>[e.title,e.cat,e.date,e.place,e.joined,e.capacity])];const csv='\ufeff'+rows.map(r=>r.map(v=>`"${String(v).replaceAll('"','""')}"`).join(';')).join('\n'),a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='dou-campus-etkinlik-raporu.csv';a.click();URL.revokeObjectURL(a.href);audit('report.export')}
-function addChallenge(){const title=prompt('Challenge adı');if(!title)return;const xp=Math.max(0,+prompt('Ödül XP','300')||0),x=Store.get('challenges',seed.challenges);x.unshift({id:Date.now(),title,reward:xp,progress:0,total:1});Store.set('challenges',x);toast('Challenge oluşturuldu');renderAdmin()}
-function addReward(){const title=prompt('Ödül adı');if(!title)return;const cost=Math.max(1,+prompt('XP bedeli','500')||500),stock=Math.max(0,+prompt('Stok','20')||0),x=Store.get('rewards',seed.rewards);x.unshift({id:Date.now(),title,cost,stock});Store.set('rewards',x);toast('Ödül envantere eklendi');renderAdmin()}
+const seed = {
+  events: [
+    {
+      id: 1,
+      title: "Kampüs Quest: Gizli Rota",
+      date: "26 Ağustos · 17:30",
+      place: "Çengelköy Kampüsü",
+      cat: "Challenge",
+      xp: 350,
+      capacity: 120,
+      joined: 84,
+      color: "",
+    },
+    {
+      id: 2,
+      title: "Girişimcilik Zirvesi",
+      date: "28 Ağustos · 14:00",
+      place: "D Blok Konferans",
+      cat: "Kariyer",
+      xp: 220,
+      capacity: 200,
+      joined: 142,
+      color: "purple",
+    },
+    {
+      id: 3,
+      title: "Sahilde İyilik Koşusu",
+      date: "31 Ağustos · 09:00",
+      place: "Üsküdar Sahil",
+      cat: "Sosyal Sorumluluk",
+      xp: 300,
+      capacity: 150,
+      joined: 106,
+      color: "blue",
+    },
+    {
+      id: 4,
+      title: "E-Spor Gece Ligi",
+      date: "3 Eylül · 19:00",
+      place: "Öğrenci Merkezi",
+      cat: "Turnuva",
+      xp: 280,
+      capacity: 64,
+      joined: 58,
+      color: "purple",
+    },
+    {
+      id: 5,
+      title: "Fotoğraf Avı",
+      date: "5 Eylül · 16:00",
+      place: "Kampüs Geneli",
+      cat: "Challenge",
+      xp: 180,
+      capacity: 100,
+      joined: 43,
+      color: "blue",
+    },
+    {
+      id: 6,
+      title: "Mezunlarla Kahve",
+      date: "8 Eylül · 15:00",
+      place: "Fuaye Alanı",
+      cat: "Kariyer",
+      xp: 150,
+      capacity: 80,
+      joined: 35,
+      color: "",
+    },
+  ],
+  challenges: [
+    {
+      id: 1,
+      title: "3 farklı kulüp etkinliğine katıl",
+      reward: 500,
+      progress: 2,
+      total: 3,
+    },
+    {
+      id: 2,
+      title: "Kampüs Quest serisini tamamla",
+      reward: 750,
+      progress: 3,
+      total: 5,
+    },
+    {
+      id: 3,
+      title: "Bir arkadaşını etkinliğe davet et",
+      reward: 200,
+      progress: 0,
+      total: 1,
+    },
+  ],
+  rewards: [
+    { id: 1, title: "Kampüs Kahvesi", cost: 350, stock: 42 },
+    { id: 2, title: "DOU Bez Çanta", cost: 900, stock: 18 },
+    { id: 3, title: "Yemekhane Menüsü", cost: 600, stock: 25 },
+    { id: 4, title: "Konser Öncelikli Giriş", cost: 1400, stock: 8 },
+  ],
+};
+const Store = {
+  get(k, f) {
+    try {
+      return JSON.parse(localStorage.getItem("dou_" + k)) ?? f;
+    } catch {
+      return f;
+    }
+  },
+  set(k, v) {
+    localStorage.setItem("dou_" + k, JSON.stringify(v));
+  },
+  init() {
+    if (!this.get("seeded", false)) {
+      this.set("events", seed.events);
+      this.set("challenges", seed.challenges);
+      this.set("rewards", seed.rewards);
+      this.set("joined", [1, 2]);
+      this.set("favorites", [3]);
+      this.set("xp", 1280);
+      this.set("scans", []);
+      this.set("seeded", true);
+    }
+  },
+};
+Store.init();
+const $ = (s, p = document) => p.querySelector(s),
+  $$ = (s, p = document) => [...p.querySelectorAll(s)];
+function toast(msg) {
+  let t = $("#toast");
+  if (!t) {
+    t = document.createElement("div");
+    t.id = "toast";
+    t.className = "toast";
+    document.body.append(t);
+  }
+  t.textContent = msg;
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 2600);
+}
+function openLogin() {
+  $("#loginModal")?.classList.add("open");
+}
+function closeLogin() {
+  $("#loginModal")?.classList.remove("open");
+}
+function login(e) {
+  e.preventDefault();
+  const id = $("#loginId").value.trim(),
+    pw = $("#loginPw").value;
+  if ((/^\d{6,}$/.test(id) && pw.length >= 4) || id.includes("@")) {
+    Store.set("session", {
+      role: id.startsWith("admin") ? "admin" : "student",
+      id,
+      name: id.startsWith("admin") ? "Yönetici" : "Demo Öğrenci",
+    });
+    location.href = id.startsWith("admin") ? "admin.html" : "student.html";
+  } else toast("Bilgileri kontrol et. Demo bilgileri formun altında.");
+}
+function logout() {
+  Store.set("session", null);
+  location.href = "index.html";
+}
+function requireRole(role) {
+  const s = Store.get("session", null);
+  if (!s || s.role !== role) location.href = "index.html";
+  return s;
+}
+function renderPublic() {
+  const box = $("#publicEvents");
+  if (!box) return;
+  box.innerHTML = Store.get("events", seed.events)
+    .slice(0, 3)
+    .map(eventCard)
+    .join("");
+}
+function eventCard(e) {
+  return `<article class="card event-card"><div class="event-cover ${e.color || ""}"><span class="badge">${e.cat}</span><span class="badge">+${e.xp} XP</span></div><div class="event-body"><div class="meta"><span>${e.date}</span><span>${e.place}</span></div><h3>${e.title}</h3><button class="btn btn-light btn-sm" onclick="eventAction(${e.id})">Detayları gör →</button></div></article>`;
+}
+function eventAction(id) {
+  if (
+    location.pathname.endsWith("index.html") ||
+    location.pathname.endsWith("/")
+  )
+    openLogin();
+  else toggleJoin(id);
+}
+function setupNav() {
+  $$(".side-link[data-panel]").forEach(
+    (b) =>
+      (b.onclick = () => {
+        $$(".side-link").forEach((x) => x.classList.remove("active"));
+        b.classList.add("active");
+        $$(".panel").forEach((x) => x.classList.remove("active"));
+        $("#" + b.dataset.panel).classList.add("active");
+        $("#pageTitle").textContent = b.textContent.trim();
+        $(".sidebar").classList.remove("open");
+      }),
+  );
+  $("#menuBtn")?.addEventListener("click", () =>
+    $(".sidebar").classList.toggle("open"),
+  );
+}
+function initStudent() {
+  const s = requireRole("student");
+  $("#userName").textContent = s.name;
+  setupNav();
+  renderStudent();
+}
+function renderStudent() {
+  const events = Store.get("events", seed.events),
+    joined = Store.get("joined", []),
+    favs = Store.get("favorites", []),
+    xp = Store.get("xp", 0);
+  $("#xpValue").textContent = xp.toLocaleString("tr-TR");
+  $("#joinedValue").textContent = joined.length;
+  $("#badgeValue").textContent = Math.floor(xp / 500);
+  $("#rankValue").textContent = "#24";
+  $("#studentEvents").innerHTML = events
+    .map(
+      (e) =>
+        `<article class="card event-card"><div class="event-cover ${e.color || ""}"><span class="badge">${e.cat}</span><button class="badge" style="border:0;color:white" onclick="toggleFav(${e.id})">${favs.includes(e.id) ? "♥" : "♡"}</button></div><div class="event-body"><div class="meta"><span>${e.date}</span><span>${e.place}</span></div><h3>${e.title}</h3><div class="actions"><button class="btn ${joined.includes(e.id) ? "btn-light" : "btn-primary"} btn-sm" onclick="toggleJoin(${e.id})">${joined.includes(e.id) ? "Kaydı iptal et" : "Katıl"}</button><span class="xp-pill">+${e.xp} XP</span></div></div></article>`,
+    )
+    .join("");
+  $("#upcomingList").innerHTML = events
+    .filter((e) => joined.includes(e.id))
+    .map(
+      (e) =>
+        `<div class="list-item"><div><b>${e.title}</b><div class="muted">${e.date}</div></div><span class="status">Kayıtlı</span></div>`,
+    )
+    .join("");
+  $("#challengeList").innerHTML = Store.get("challenges", seed.challenges)
+    .map(
+      (c) =>
+        `<div class="list-item"><div style="flex:1"><b>${c.title}</b><div class="progress" style="margin-top:10px"><span style="width:${(c.progress / c.total) * 100}%"></span></div></div><b>+${c.reward}</b></div>`,
+    )
+    .join("");
+  $("#rewardsList").innerHTML = Store.get("rewards", seed.rewards)
+    .map(
+      (r) =>
+        `<div class="card"><div class="iconbox">◆</div><h3>${r.title}</h3><p>${r.stock} adet kaldı</p><button class="btn btn-primary btn-sm" onclick="redeem(${r.id})">${r.cost} XP ile al</button></div>`,
+    )
+    .join("");
+}
+function toggleJoin(id) {
+  let x = Store.get("joined", []);
+  x = x.includes(id) ? x.filter((i) => i !== id) : [...x, id];
+  Store.set("joined", x);
+  toast(
+    x.includes(id)
+      ? "Etkinlik kaydın oluşturuldu"
+      : "Etkinlik kaydın iptal edildi",
+  );
+  renderStudent();
+}
+function toggleFav(id) {
+  let x = Store.get("favorites", []);
+  x = x.includes(id) ? x.filter((i) => i !== id) : [...x, id];
+  Store.set("favorites", x);
+  renderStudent();
+}
+function redeem(id) {
+  const rewards = Store.get("rewards", seed.rewards),
+    r = rewards.find((x) => x.id === id),
+    xp = Store.get("xp", 0);
+  if (xp < r.cost) return toast("Bu ödül için yeterli XP yok");
+  if (r.stock < 1) return toast("Ödül stoğu tükendi");
+  r.stock--;
+  Store.set("rewards", rewards);
+  Store.set("xp", xp - r.cost);
+  toast(
+    "Ödül kodun oluşturuldu: DOU-" +
+      Math.random().toString(36).slice(2, 8).toUpperCase(),
+  );
+  renderStudent();
+}
+function completeScan() {
+  const joined = Store.get("joined", []);
+  if (!joined.length) return toast("Önce bir etkinliğe kayıt ol");
+  const id = joined.find((x) => !Store.get("scans", []).includes(x));
+  if (!id) return toast("Kayıtlı etkinliklerinin QR katılımı zaten doğrulandı");
+  const e = Store.get("events", seed.events).find((x) => x.id === id),
+    scans = [...Store.get("scans", []), id];
+  Store.set("scans", scans);
+  Store.set("xp", Store.get("xp", 0) + e.xp);
+  audit("attendance.verify", { eventId: id });
+  $("#scanResult").innerHTML =
+    `<span class="status">Doğrulandı</span><h3>${e.title}</h3><p>Bu cihaz için tek kullanımlık katılım doğrulandı. +${e.xp} XP hesabına işlendi.</p>`;
+  toast("Katılım doğrulandı!");
+  renderStudent();
+}
+async function scanQR() {
+  if (!navigator.mediaDevices?.getUserMedia || !("BarcodeDetector" in window)) {
+    toast("Bu tarayıcıda kamera QR desteği yok; demo doğrulaması çalıştırıldı");
+    return completeScan();
+  }
+  let stream;
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: "environment" },
+    });
+    const video = document.createElement("video");
+    video.srcObject = stream;
+    video.setAttribute("playsinline", "");
+    await video.play();
+    $("#scanResult").innerHTML =
+      "<b>Kamera açık</b><p>QR kodu kameraya göster…</p>";
+    const detector = new BarcodeDetector({ formats: ["qr_code"] });
+    const until = Date.now() + 20000;
+    while (Date.now() < until) {
+      const codes = await detector.detect(video);
+      if (codes.length) {
+        audit("qr.read", { valueLength: codes[0].rawValue.length });
+        completeScan();
+        return;
+      }
+      await new Promise((r) => setTimeout(r, 250));
+    }
+    toast("QR bulunamadı; tekrar dene");
+  } catch (e) {
+    toast("Kamera açılamadı. Tarayıcı iznini kontrol et");
+    audit("camera.error", { message: String(e) });
+  } finally {
+    stream?.getTracks().forEach((t) => t.stop());
+  }
+}
+function initAdmin() {
+  requireRole("admin");
+  setupNav();
+  $$("button").forEach((b) => {
+    if (b.textContent.includes("Challenge oluştur")) b.onclick = addChallenge;
+    if (b.textContent.includes("Ödül ekle")) b.onclick = addReward;
+    if (b.textContent.includes("Raporu dışa")) b.onclick = exportCSV;
+  });
+  renderAdmin();
+}
+function renderAdmin() {
+  const events = Store.get("events", seed.events),
+    rewards = Store.get("rewards", seed.rewards);
+  $("#adminEventCount").textContent = events.length;
+  $("#adminAttend").textContent = events.reduce((a, b) => a + b.joined, 0);
+  $("#adminEvents").innerHTML = events
+    .map(
+      (e) =>
+        `<tr><td><b>${e.title}</b></td><td>${e.cat}</td><td>${e.date}</td><td>${e.joined}/${e.capacity}</td><td><span class="status">Yayında</span></td><td><button class="btn btn-light btn-sm" onclick="deleteEvent(${e.id})">Sil</button></td></tr>`,
+    )
+    .join("");
+  $("#inventory").innerHTML = rewards
+    .map(
+      (r) =>
+        `<tr><td><b>${r.title}</b></td><td>${r.cost} XP</td><td>${r.stock}</td><td><span class="status ${r.stock < 10 ? "warn" : ""}">${r.stock < 10 ? "Kritik" : "Yeterli"}</span></td></tr>`,
+    )
+    .join("");
+}
+function addEvent(e) {
+  e.preventDefault();
+  const events = Store.get("events", seed.events),
+    f = new FormData(e.target);
+  events.unshift({
+    id: Date.now(),
+    title: f.get("title"),
+    cat: f.get("cat"),
+    date: f.get("date"),
+    place: f.get("place"),
+    xp: +f.get("xp"),
+    capacity: +f.get("capacity"),
+    joined: 0,
+    color: "purple",
+  });
+  Store.set("events", events);
+  e.target.reset();
+  $("#eventModal").classList.remove("open");
+  toast("Etkinlik yayınlandı");
+  renderAdmin();
+}
+function deleteEvent(id) {
+  Store.set(
+    "events",
+    Store.get("events", seed.events).filter((e) => e.id !== id),
+  );
+  toast("Etkinlik kaldırıldı");
+  renderAdmin();
+}
+function rotateQR() {
+  const token = "DOU-" + Date.now().toString(36).toUpperCase();
+  $("#qrToken").textContent = token;
+  $("#qrTime").textContent = "60 sn";
+  let n = 60,
+    el = $("#qrTime"),
+    timer = setInterval(() => {
+      n--;
+      el.textContent = n + " sn";
+      if (!n) {
+        clearInterval(timer);
+        el.textContent = "Süresi doldu";
+      }
+    }, 1000);
+  toast("Yeni tek kullanımlık QR anahtarı üretildi");
+}
+function deviceIdentity() {
+  let id = Store.get("device", null);
+  if (!id) {
+    id = {
+      id: crypto.randomUUID?.() || Math.random().toString(36).slice(2),
+      verifiedAt: new Date().toISOString(),
+      agent: navigator.userAgent.slice(0, 120),
+    };
+    Store.set("device", id);
+  }
+  return id;
+}
+function audit(action, meta = {}) {
+  const logs = Store.get("audit", []);
+  logs.unshift({
+    at: new Date().toISOString(),
+    action,
+    device: deviceIdentity().id,
+    ...meta,
+  });
+  Store.set("audit", logs.slice(0, 250));
+}
+async function signInMicrosoft() {
+  const c = window.DOU_CONFIG || {};
+  if (c.mode !== "supabase" || !c.supabaseUrl || !c.supabasePublishableKey)
+    return toast("Microsoft 365 bağlantısı üretim yapılandırması bekliyor");
+  try {
+    const { createClient } = await import(
+      "https://esm.sh/@supabase/supabase-js@2.57.4"
+    );
+    const sb = createClient(c.supabaseUrl, c.supabasePublishableKey);
+    await sb.auth.signInWithOAuth({
+      provider: "azure",
+      options: {
+        scopes: "email",
+        redirectTo: location.origin + location.pathname,
+      },
+    });
+  } catch (e) {
+    toast("Microsoft oturumu başlatılamadı");
+    audit("auth.azure.error", { message: String(e) });
+  }
+}
+function exportCSV() {
+  const events = Store.get("events", seed.events),
+    rows = [
+      ["Etkinlik", "Kategori", "Tarih", "Konum", "Katılım", "Kontenjan"],
+      ...events.map((e) => [
+        e.title,
+        e.cat,
+        e.date,
+        e.place,
+        e.joined,
+        e.capacity,
+      ]),
+    ];
+  const csv =
+      "\ufeff" +
+      rows
+        .map((r) =>
+          r.map((v) => `"${String(v).replaceAll('"', '""')}"`).join(";"),
+        )
+        .join("\n"),
+    a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
+  a.download = "dou-campus-etkinlik-raporu.csv";
+  a.click();
+  URL.revokeObjectURL(a.href);
+  audit("report.export");
+}
+function addChallenge() {
+  const title = prompt("Challenge adı");
+  if (!title) return;
+  const xp = Math.max(0, +prompt("Ödül XP", "300") || 0),
+    x = Store.get("challenges", seed.challenges);
+  x.unshift({ id: Date.now(), title, reward: xp, progress: 0, total: 1 });
+  Store.set("challenges", x);
+  toast("Challenge oluşturuldu");
+  renderAdmin();
+}
+function addReward() {
+  const title = prompt("Ödül adı");
+  if (!title) return;
+  const cost = Math.max(1, +prompt("XP bedeli", "500") || 500),
+    stock = Math.max(0, +prompt("Stok", "20") || 0),
+    x = Store.get("rewards", seed.rewards);
+  x.unshift({ id: Date.now(), title, cost, stock });
+  Store.set("rewards", x);
+  toast("Ödül envantere eklendi");
+  renderAdmin();
+}
 deviceIdentity();
-document.addEventListener('DOMContentLoaded',()=>{const form=$('#loginModal form');if(form&&!$('#microsoftLogin')){const b=document.createElement('button');b.id='microsoftLogin';b.type='button';b.className='btn btn-light';b.style='width:100%;margin:12px 0';b.textContent='Microsoft 365 ile devam et';b.onclick=signInMicrosoft;form.before(b)}})
-document.addEventListener('DOMContentLoaded',()=>{renderPublic();if(document.body.dataset.page==='student')initStudent();if(document.body.dataset.page==='admin')initAdmin();$$('[data-login]').forEach(x=>x.onclick=openLogin);$('#loginModal')?.addEventListener('click',e=>{if(e.target.id==='loginModal')closeLogin()})});
+document.addEventListener("DOMContentLoaded", () => {
+  const form = $("#loginModal form");
+  if (form && !$("#microsoftLogin")) {
+    const b = document.createElement("button");
+    b.id = "microsoftLogin";
+    b.type = "button";
+    b.className = "btn btn-light";
+    b.style = "width:100%;margin:12px 0";
+    b.textContent = "Microsoft 365 ile devam et";
+    b.onclick = signInMicrosoft;
+    form.before(b);
+  }
+});
+document.addEventListener("DOMContentLoaded", () => {
+  renderPublic();
+  if (document.body.dataset.page === "student") initStudent();
+  if (document.body.dataset.page === "admin") initAdmin();
+  $$("[data-login]").forEach((x) => (x.onclick = openLogin));
+  $("#loginModal")?.addEventListener("click", (e) => {
+    if (e.target.id === "loginModal") closeLogin();
+  });
+});

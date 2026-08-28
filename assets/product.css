@@ -1,0 +1,150 @@
+.integration-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 18px;
+  margin-bottom: 22px;
+  border: 1px solid #f0cad1;
+  border-radius: 16px;
+  background: #fff7f8;
+  color: #641225;
+}
+.integration-banner strong {
+  display: block;
+}
+.integration-banner small {
+  color: #86525d;
+}
+.status.offline {
+  background: #f2f2f3;
+  color: #666;
+}
+.transcript-hero {
+  display: grid;
+  grid-template-columns: 1.35fr 0.65fr;
+  gap: 18px;
+}
+.transcript-score {
+  background: linear-gradient(145deg, #18181a, #323238);
+  color: #fff;
+}
+.skill-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-top: 18px;
+}
+.skill-row {
+  display: grid;
+  grid-template-columns: 130px 1fr 42px;
+  align-items: center;
+  gap: 12px;
+}
+.skill-row span {
+  font-size: 13px;
+  font-weight: 700;
+}
+.achievement {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+.achievement .iconbox {
+  flex: none;
+}
+.unread {
+  border-left: 4px solid var(--red);
+}
+.approval-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.club-kpi {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 15px;
+  margin-top: 15px;
+  border-top: 1px solid var(--line);
+}
+.club-kpi strong {
+  display: block;
+  font-size: 20px;
+}
+.recommendation {
+  position: relative;
+  overflow: hidden;
+}
+.recommendation:after {
+  content: "SANA ÖZEL";
+  position: absolute;
+  right: -33px;
+  top: 18px;
+  transform: rotate(38deg);
+  background: var(--red);
+  color: #fff;
+  padding: 5px 38px;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+.btn:focus-visible,
+.side-link:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid rgba(200, 16, 46, 0.3);
+  outline-offset: 2px;
+}
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.loading {
+  animation: pulse 1.2s infinite alternate;
+}
+@keyframes pulse {
+  to {
+    opacity: 0.45;
+  }
+}
+@media (max-width: 760px) {
+  .transcript-hero,
+  .skill-grid {
+    grid-template-columns: 1fr;
+  }
+  .skill-row {
+    grid-template-columns: 105px 1fr 38px;
+  }
+  .integration-banner {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+@media print {
+  .sidebar,
+  .topbar,
+  .btn,
+  .toast {
+    display: none !important;
+  }
+  .app {
+    display: block;
+  }
+  .main {
+    padding: 0;
+  }
+  .panel {
+    display: none !important;
+  }
+  #transcript {
+    display: block !important;
+  }
+  .card {
+    box-shadow: none;
+  }
+  .transcript-hero {
+    grid-template-columns: 1.35fr 0.65fr;
+  }
+}
