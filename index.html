@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="assets/styles.css" />
@@ -20,7 +20,7 @@
   <body>
     <header class="wrap">
       <nav class="nav">
-        <a class="brand" href="index.html"><b>DOU</b> Campus</a>
+        <a class="brand" href="index.html"><span class="brand-mark">D</span><span><b>DOU</b> Campus<small>ÖĞRENCİ DENEYİMİ</small></span></a>
         <div class="navlinks">
           <a href="#etkinlikler">Etkinlikler</a
           ><a href="#nasil">Nasıl çalışır?</a
@@ -52,7 +52,8 @@
               ><span>✓ Gerçek zamanlı XP</span>
             </div>
           </div>
-          <div class="hero-card">
+          <div class="hero-card" aria-label="Öğrenci paneli önizlemesi">
+            <div class="preview-bar"><span></span><span></span><span></span><small>campus.dogus.edu.tr</small></div>
             <div class="phone">
               <div class="phone-top">
                 <div>
@@ -62,6 +63,7 @@
                 <span class="xp-pill">1.280 XP</span>
               </div>
               <div class="event-mini">
+                <div class="event-art" aria-hidden="true"><i></i><i></i><i></i></div>
                 <span class="badge" style="width: max-content"
                   >BUGÜN · 17:30</span
                 >
@@ -93,7 +95,7 @@
           </div>
           <div class="grid3">
             <article class="card">
-              <div class="iconbox">⌁</div>
+              <div class="iconbox"><i data-lucide="compass"></i></div>
               <h3>Keşfet ve katıl</h3>
               <p>
                 Kulüp, kariyer, spor ve sosyal sorumluluk etkinliklerini ilgi
@@ -101,7 +103,7 @@
               </p>
             </article>
             <article class="card">
-              <div class="iconbox">◎</div>
+              <div class="iconbox"><i data-lucide="scan-line"></i></div>
               <h3>QR ile doğrula</h3>
               <p>
                 Etkinlik alanındaki süreli QR’ı okut. Tek cihaz ve tek kullanım
@@ -109,7 +111,7 @@
               </p>
             </article>
             <article class="card">
-              <div class="iconbox">↗</div>
+              <div class="iconbox"><i data-lucide="trophy"></i></div>
               <h3>Yüksel ve kazan</h3>
               <p>
                 Challenge tamamla, rozet aç, bölüm liginde yüksel ve XP’lerini
@@ -234,6 +236,7 @@
       </div>
     </div>
     <script src="config.js"></script>
+    <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
     <script src="assets/app.js"></script>
     <script src="assets/product.js"></script>
   </body>
