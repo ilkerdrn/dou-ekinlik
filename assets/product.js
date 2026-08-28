@@ -96,7 +96,7 @@
       )
       .join(
         "",
-      )}</div></article><article class="card"><h3>Doğrulanmış başarılar</h3><div class="list"><div class="achievement"><div class="iconbox">✓</div><div><b>Kulüp Kaşifi</b><div class="muted">3 farklı topluluk</div></div></div><div class="achievement"><div class="iconbox">★</div><div><b>İyilik Elçisi</b><div class="muted">12 hizmet saati</div></div></div></div></article></div>`;
+      )}</div></article><article class="card"><h3>Doğrulanmış başarılar</h3><div class="list"><div class="achievement"><div class="iconbox"><i data-lucide="badge-check"></i></div><div><b>Kulüp Kaşifi</b><div class="muted">3 farklı topluluk</div></div></div><div class="achievement"><div class="iconbox"><i data-lucide="heart-handshake"></i></div><div><b>İyilik Elçisi</b><div class="muted">12 hizmet saati</div></div></div></div></article></div>`;
   }
   function renderNotifications() {
     const el = q("#notificationList");
@@ -154,7 +154,7 @@
     el.innerHTML = clubs
       .map(
         (c) =>
-          `<article class="card"><div class="iconbox">◇</div><h3>${esc(c.name)}</h3><div class="club-kpi"><div><strong>${c.members}</strong><small class="muted">Üye</small></div><div><strong>${c.events}</strong><small class="muted">Etkinlik</small></div><div><strong>%${c.rate}</strong><small class="muted">Memnuniyet</small></div></div></article>`,
+          `<article class="card"><div class="iconbox"><i data-lucide="users-round"></i></div><h3>${esc(c.name)}</h3><div class="club-kpi"><div><strong>${c.members}</strong><small class="muted">Üye</small></div><div><strong>${c.events}</strong><small class="muted">Etkinlik</small></div><div><strong>%${c.rate}</strong><small class="muted">Memnuniyet</small></div></div></article>`,
       )
       .join("");
   }
@@ -191,5 +191,6 @@
     renderApprovals();
     renderClubs();
     enhanceEvents();
+    window.lucide?.createIcons({ attrs: { "stroke-width": 1.8 } });
   });
 })();
