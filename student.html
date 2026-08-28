@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="assets/styles.css" />
@@ -16,22 +16,22 @@
   <body data-page="student">
     <div class="app">
       <aside class="sidebar">
-        <a class="brand" href="index.html"><b>DOU</b> Campus</a>
+        <a class="brand" href="index.html"><span class="brand-mark">D</span><span><b>DOU</b> Campus<small>ÖĞRENCİ PANELİ</small></span></a>
         <nav class="side-nav">
           <button class="side-link active" data-panel="overview">
-            ⌂ Genel bakış</button
-          ><button class="side-link" data-panel="events">◫ Etkinlikler</button
-          ><button class="side-link" data-panel="scan">⌁ QR doğrula</button
+            <i data-lucide="layout-dashboard"></i>Genel bakış</button
+          ><button class="side-link" data-panel="events"><i data-lucide="calendar-days"></i>Etkinlikler</button
+          ><button class="side-link" data-panel="scan"><i data-lucide="scan-line"></i>QR doğrula</button
           ><button class="side-link" data-panel="challenges">
-            ◎ Challenge’lar</button
+            <i data-lucide="target"></i>Challenge’lar</button
           ><button class="side-link" data-panel="rewards">
-            ◆ Ödül mağazası</button
-          ><button class="side-link" data-panel="league">↗ Kampüs ligi</button
+            <i data-lucide="gift"></i>Ödül mağazası</button
+          ><button class="side-link" data-panel="league"><i data-lucide="trophy"></i>Kampüs ligi</button
           ><button class="side-link" data-panel="transcript">
-            ▤ Sosyal transkript</button
+            <i data-lucide="file-badge"></i>Sosyal transkript</button
           ><button class="side-link" data-panel="notifications">
-            ◌ Bildirimler</button
-          ><button class="side-link" data-panel="profile">○ Profilim</button>
+            <i data-lucide="bell"></i>Bildirimler</button
+          ><button class="side-link" data-panel="profile"><i data-lucide="user-round"></i>Profilim</button>
         </nav>
         <div class="side-bottom">
           <div class="user-chip">
@@ -46,7 +46,7 @@
       <main class="main">
         <header class="topbar">
           <div class="actions">
-            <button id="menuBtn" class="btn btn-light mobile-menu">☰</button>
+            <button id="menuBtn" class="btn btn-light mobile-menu" aria-label="Menüyü aç"><i data-lucide="menu"></i></button>
             <div>
               <small class="muted">DOU Campus</small>
               <h1 id="pageTitle">Genel bakış</h1>
@@ -273,6 +273,7 @@
       </main>
     </div>
     <script src="config.js"></script>
+    <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
     <script src="assets/app.js"></script>
     <script src="assets/product.js"></script>
   </body>
