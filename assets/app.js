@@ -236,9 +236,10 @@ function renderStudent() {
   $("#rewardsList").innerHTML = Store.get("rewards", seed.rewards)
     .map(
       (r) =>
-        `<div class="card"><div class="iconbox">◆</div><h3>${r.title}</h3><p>${r.stock} adet kaldı</p><button class="btn btn-primary btn-sm" onclick="redeem(${r.id})">${r.cost} XP ile al</button></div>`,
+        `<div class="card"><div class="iconbox"><i data-lucide="gift"></i></div><h3>${r.title}</h3><p>${r.stock} adet kaldı</p><button class="btn btn-primary btn-sm" onclick="redeem(${r.id})">${r.cost} XP ile al</button></div>`,
     )
     .join("");
+  window.lucide?.createIcons({ attrs: { "stroke-width": 1.8 } });
 }
 function toggleJoin(id) {
   let x = Store.get("joined", []);
@@ -508,4 +509,11 @@ document.addEventListener("DOMContentLoaded", () => {
   $("#loginModal")?.addEventListener("click", (e) => {
     if (e.target.id === "loginModal") closeLogin();
   });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      closeLogin();
+      $(".sidebar")?.classList.remove("open");
+    }
+  });
+  window.lucide?.createIcons({ attrs: { "stroke-width": 1.8 } });
 });
