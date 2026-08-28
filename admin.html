@@ -4,29 +4,32 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Yönetim — DOU Campus</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="assets/styles.css" />
     <link rel="stylesheet" href="assets/product.css" />
   </head>
   <body data-page="admin">
     <div class="app">
       <aside class="sidebar">
-        <a class="brand" href="index.html"><b>DOU</b> Campus</a>
+        <a class="brand" href="index.html"><span class="brand-mark">D</span><span><b>DOU</b> Campus<small>YÖNETİM KONSOLU</small></span></a>
         <nav class="side-nav">
           <button class="side-link active" data-panel="adminOverview">
-            ⌂ Yönetim özeti</button
+            <i data-lucide="layout-dashboard"></i>Yönetim özeti</button
           ><button class="side-link" data-panel="manageEvents">
-            ◫ Etkinlik yönetimi</button
+            <i data-lucide="calendar-range"></i>Etkinlik yönetimi</button
           ><button class="side-link" data-panel="qrManage">
-            ⌁ QR ve katılım</button
+            <i data-lucide="scan-line"></i>QR ve katılım</button
           ><button class="side-link" data-panel="manageChallenges">
-            ◎ Challenge yönetimi</button
+            <i data-lucide="target"></i>Challenge yönetimi</button
           ><button class="side-link" data-panel="manageRewards">
-            ◆ Ödül ve stok</button
-          ><button class="side-link" data-panel="analytics">↗ Analitik</button
+            <i data-lucide="package-open"></i>Ödül ve stok</button
+          ><button class="side-link" data-panel="analytics"><i data-lucide="chart-no-axes-combined"></i>Analitik</button
           ><button class="side-link" data-panel="approvals">
-            ✓ Onay merkezi</button
-          ><button class="side-link" data-panel="clubs">◇ Kulüpler</button
-          ><button class="side-link" data-panel="roles">○ Roller</button>
+            <i data-lucide="badge-check"></i>Onay merkezi</button
+          ><button class="side-link" data-panel="clubs"><i data-lucide="users-round"></i>Kulüpler</button
+          ><button class="side-link" data-panel="roles"><i data-lucide="shield-check"></i>Roller</button>
         </nav>
         <div class="side-bottom">
           <div class="user-chip">
@@ -41,7 +44,7 @@
       <main class="main">
         <header class="topbar">
           <div class="actions">
-            <button id="menuBtn" class="btn btn-light mobile-menu">☰</button>
+            <button id="menuBtn" class="btn btn-light mobile-menu" aria-label="Menüyü aç"><i data-lucide="menu"></i></button>
             <div>
               <small class="muted">Yönetim konsolu</small>
               <h1 id="pageTitle">Yönetim özeti</h1>
@@ -373,6 +376,7 @@
       </div>
     </div>
     <script src="config.js"></script>
+    <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
     <script src="assets/app.js"></script>
     <script src="assets/product.js"></script>
   </body>
